@@ -1,0 +1,11 @@
+class CreateScores < ActiveRecord::Migration[6.0]
+  def change
+    create_table :scores do |t|
+      t.integer :maze_id
+      t.integer :user_id
+      t.time :time
+
+      t.timestamps
+    end
+  end
+end
