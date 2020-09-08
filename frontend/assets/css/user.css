@@ -1,21 +1,14 @@
 div {
-
     display: block;
     height: 25px;
     width: auto;
-
     margin: 0;
-
 }
 
 b {
-
     display: inline-block;
-
     width: 25px;
-
     height: 25px;
-
 }
 
 
@@ -25,19 +18,13 @@ b[gorilla]::before {
 }
 
 b[w] {
-
     background: black;
-
 }
 
 b[g] {
-
     background: red;
-
 }
 
 b[e] {
-
     background: green;
-
 }
