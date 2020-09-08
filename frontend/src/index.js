@@ -2,12 +2,53 @@ document.addEventListener("DOMContentLoaded", () => {
     let maze;
     let gate;
     createMaze()
-    playGame()
+    addBananas()
+    document.getElementById("start-game").addEventListener("click", startGame)
+
+    function startGame() {
+        let timer;
+        let stopTimer = false;
+        timerCount()
+        playGame()
+        function timerCount(){
+            let sec = 0;
+            let min = 0;
+            if (stopTimer == false){
+                timer = setInterval(function(){
+                    sec += 1;
+                    if (sec == 60) {
+                        sec = 0;
+                        min += 1;
+                    }
+                    if (sec < 10) {
+                        sec = `0${sec}`
+                    }
+                    if (min < 10) {
+                        min = `0${min}`
+                    }
+                    document.getElementById('timer-display').innerHTML=`${min}:${sec}`;
+                    sec = parseInt(sec)
+                    min = parseInt(min)
+                }, 1000);
+            }
+        }
+    }
+
+    function display() {
+        document.getElementById("maze").innerHTML = "";
+        for (let i = 0; i < maze.length; i++) {
+            let output = "<div>";
+            for (let j = 0; j < maze.length; j++) {
+                output += "<b " + maze[i][j] + "></b>";
+            }
+            output += "</div>";
+            document.getElementById("maze").innerHTML += output;
+        }
+    }
 
     function playGame(){
         let locationX = gate 
         let locationY = maze.length - 2
-        console.log(maze[locationY][locationX])
         document.addEventListener("keydown", moveEmoji)
 
         function moveEmoji(event) {
@@ -54,18 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationX = locationX + 1
                     display()
                 }
-            }
-        }
-
-        function display() {
-            document.getElementById("maze").innerHTML = "";
-            for (let i = 0; i < maze.length; i++) {
-                let output = "<div>";
-                for (let j = 0; j < maze.length; j++) {
-                    output += "<b " + maze[i][j] + "></b>";
-                }
-                output += "</div>";
-                document.getElementById("maze").innerHTML += output;
             }
         }
     }
@@ -197,8 +226,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(51);
+        generate(31);
         display();
+    }
+
+    function addBananas() {
+        let number = 8
+        for (let i = 0; i < number; i++) {
+            let y = 0 
+            let x = 0
+            while (maze[y][x] != "") {
+                y = randomNumber(1, maze.length - 2)
+                x = randomNumber(1, maze.length -2)
+            }
+            maze[y][x] = "banana"
+        }
+
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        display()
     }
 
 })
