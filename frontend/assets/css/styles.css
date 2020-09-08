@@ -18,15 +18,16 @@ b {
 
 }
 
-b[w] {
-
-    background: black;
-
-}
 
 b[gorilla]::before {
     content: "🦍";
     font-size: 20px;
+}
+
+b[w] {
+
+    background: black;
+
 }
 
 b[g] {

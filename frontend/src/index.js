@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function moveEmoji(event) {
             // Stop screen from moving up or down when arrow is clicked
-            event.preventDefault()
             if (event.key == "ArrowUp") {
+                event.preventDefault()
                 if (maze[locationY - 1][locationX] == "") {
                     // Move gorilla up
                     maze[locationY - 1][locationX] = "gorilla"
@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     display()
                 }
             } else if (event.key == "ArrowDown") {
+                event.preventDefault()
                 if (maze[locationY + 1][locationX] == "") {
                     // Move gorilla down
                     maze[locationY + 1][locationX] = "gorilla"
@@ -196,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(31);
+        generate(51);
         display();
     }
 

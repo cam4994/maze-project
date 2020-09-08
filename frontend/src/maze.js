@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function createOrLoginUser(event, url) {
         event.preventDefault()
-        console.log(event.target)
-        console.log(url)
+
         let username = event.target.username.value
         let password = event.target.password.value
+        // Clear out username and password input boxes 
         event.target.username.value = ''
         event.target.password.value = ''
 
