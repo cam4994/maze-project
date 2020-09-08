@@ -1,7 +1,7 @@
 div {
 
     display: block;
-    height: 12px;
+    height: 25px;
     width: auto;
 
     margin: 0;
@@ -12,9 +12,9 @@ b {
 
     display: inline-block;
 
-    width: 12px;
+    width: 25px;
 
-    height: 12px;
+    height: 25px;
 
 }
 
@@ -22,6 +22,11 @@ b[w] {
 
     background: black;
 
+}
+
+b[gorilla]::before {
+    content: "🦍";
+    font-size: 20px;
 }
 
 b[g] {

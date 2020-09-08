@@ -1,8 +1,74 @@
 document.addEventListener("DOMContentLoaded", () => {
+    let maze;
+    let gate;
     createMaze()
-    function createMaze(){
+    playGame()
 
-        let maze;
+    function playGame(){
+        let locationX = gate 
+        let locationY = maze.length - 2
+        console.log(maze[locationY][locationX])
+        document.addEventListener("keydown", moveEmoji)
+
+        function moveEmoji(event) {
+            // Stop screen from moving up or down when arrow is clicked
+            event.preventDefault()
+            if (event.key == "ArrowUp") {
+                if (maze[locationY - 1][locationX] == "") {
+                    // Move gorilla up
+                    maze[locationY - 1][locationX] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new Y position of gorilla, X is unchanged
+                    locationY = locationY - 1
+                    display()
+                }
+            } else if (event.key == "ArrowDown") {
+                if (maze[locationY + 1][locationX] == "") {
+                    // Move gorilla down
+                    maze[locationY + 1][locationX] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new Y position of gorilla, X is unchanged
+                    locationY = locationY + 1
+                    display()
+                }
+            } else if (event.key == "ArrowLeft") {
+                if (maze[locationY][locationX - 1] == "") {
+                    // Move gorilla left
+                    maze[locationY][locationX - 1] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new X position of gorilla, Y is unchanged
+                    locationX = locationX - 1
+                    display()
+                }
+            } else if (event.key == "ArrowRight") {
+                if (maze[locationY][locationX + 1] == "") {
+                    // Move gorilla right
+                    maze[locationY][locationX + 1] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new X position of gorilla, Y is unchanged
+                    locationX = locationX + 1
+                    display()
+                }
+            }
+        }
+
+        function display() {
+            document.getElementById("maze").innerHTML = "";
+            for (let i = 0; i < maze.length; i++) {
+                let output = "<div>";
+                for (let j = 0; j < maze.length; j++) {
+                    output += "<b " + maze[i][j] + "></b>";
+                }
+                output += "</div>";
+                document.getElementById("maze").innerHTML += output;
+            }
+        }
+    }
+    function createMaze(){
 
         function generate(dimensions) {
             maze = new Array();
@@ -44,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
                 }
             }
+            gate = x
             maze[maze.length - 1][x] = "g";
         }
 
@@ -114,17 +181,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function display() {
             document.getElementById("maze").innerHTML = "";
-
+            maze[maze.length - 2][gate] = "gorilla"
             for (let i = 0; i < maze.length; i++) {
                 let output = "<div>";
                 for (let j = 0; j < maze.length; j++) {
+                    // if (i == maze.length-2 && j == gate) {
+                    //     output += "<b class = 'gorilla'></b>"
+                    // } else {
+                    //     output += "<b " + maze[i][j] + "></b>";
+                    // }
                     output += "<b " + maze[i][j] + "></b>";
                 }
                 output += "</div>";
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(71);
+        generate(31);
         display();
     }
+
 })
