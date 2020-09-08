@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let timer;
     let scoreCount;
     createMaze()
-    // addBananas()
+    addBananas()
     document.getElementById("start-game").addEventListener("click", startGame)
 
     function startGame() {
@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(21);
+        generate(31);
         display();
     }
 
