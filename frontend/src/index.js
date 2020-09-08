@@ -1,13 +1,62 @@
 document.addEventListener("DOMContentLoaded", () => {
     let maze;
     let gate;
+    let score;
+    let timer;
+    let scoreCount;
     createMaze()
-    playGame()
+    addBananas()
+    document.getElementById("start-game").addEventListener("click", startGame)
 
-    function playGame(){
-        let locationX = gate 
+    function startGame() {
+        timerCount()
+        keepScore()
+        playGame()
+        function timerCount() {
+            let sec = 0;
+            let min = 0;
+            timer = setInterval(function () {
+                sec += 1;
+                if (sec == 60) {
+                    sec = 0;
+                    min += 1;
+                }
+                if (sec < 10) {
+                    sec = `0${sec}`
+                }
+                if (min < 10) {
+                    min = `0${min}`
+                }
+                document.getElementById('timer-display').innerHTML = `${min}:${sec}`;
+                sec = parseInt(sec)
+                min = parseInt(min)
+            }, 1000);
+        }
+
+        function keepScore() {
+            score = 1000
+            scoreCount = setInterval(function () {
+                document.getElementById('score-count').innerHTML = score;
+                score -= 20;
+            }, 1000);
+        }
+    }
+
+    function display() {
+        document.getElementById("maze").innerHTML = "";
+        for (let i = 0; i < maze.length; i++) {
+            let output = "<div>";
+            for (let j = 0; j < maze.length; j++) {
+                output += "<b " + maze[i][j] + "></b>";
+            }
+            output += "</div>";
+            document.getElementById("maze").innerHTML += output;
+        }
+    }
+
+    function playGame() {
+        let locationX = gate
         let locationY = maze.length - 2
-        console.log(maze[locationY][locationX])
         document.addEventListener("keydown", moveEmoji)
 
         function moveEmoji(event) {
@@ -22,6 +71,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new Y position of gorilla, X is unchanged
                     locationY = locationY - 1
                     display()
+                    // Check if the gorilla makes it to the exit
+                } else if (maze[locationY - 1][locationX] == "e") {
+                    // Move gorilla up
+                    maze[locationY - 1][locationX] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new Y position of gorilla, X is unchanged
+                    locationY = locationY - 1
+                    display()
+                    winGame()
                 }
             } else if (event.key == "ArrowDown") {
                 event.preventDefault()
@@ -57,19 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        function display() {
-            document.getElementById("maze").innerHTML = "";
-            for (let i = 0; i < maze.length; i++) {
-                let output = "<div>";
-                for (let j = 0; j < maze.length; j++) {
-                    output += "<b " + maze[i][j] + "></b>";
-                }
-                output += "</div>";
-                document.getElementById("maze").innerHTML += output;
-            }
+        function winGame() {
+            //Stop timer and score from counting
+            clearInterval(timer)
+            clearInterval(scoreCount)
         }
     }
-    function createMaze(){
+    function createMaze() {
 
         function generate(dimensions) {
             maze = new Array();
@@ -117,9 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function addExit() {
             let x = 0;
-            for (let i = maze.length-1; i > 0; i--) {
+            for (let i = maze.length - 1; i > 0; i--) {
                 if (maze[1][i] == "") {
-                    x = i; 
+                    x = i;
                     break;
                 }
             }
@@ -132,8 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 //walls only in even cells
-                let y = Math.floor(randomNumber(minY, maxY)/2)*2;
-                if (y == 0){
+                let y = Math.floor(randomNumber(minY, maxY) / 2) * 2;
+                if (y == 0) {
                     y = 2;
                 }
                 addHWall(minX, maxX, y);
@@ -145,8 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
                 //walls only in even cells
-                let x = Math.floor(randomNumber(minX, maxX)/2)*2;
-                if (x == 0){
+                let x = Math.floor(randomNumber(minX, maxX) / 2) * 2;
+                if (x == 0) {
                     x = 2;
                 }
                 addVWall(minY, maxY, x);
@@ -197,8 +250,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(51);
+        generate(31);
         display();
     }
 
+    function addBananas() {
+        let number = 8
+        for (let i = 0; i < number; i++) {
+            let y = 0
+            let x = 0
+            while (maze[y][x] != "") {
+                y = randomNumber(1, maze.length - 2)
+                x = randomNumber(1, maze.length - 2)
+            }
+            maze[y][x] = "banana"
+        }
+
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        display()
+    }
 })
