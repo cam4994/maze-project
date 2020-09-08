@@ -3,11 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Maze Project</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
   </head>
   <body>
 
     <main>
+
+      <ul>
+        <li><a href="#user">User</a></li>
+        <li><a href="#leaderboard">News</a></li>
+        <li><a href="#maze">New Maze</a></li>
+        <li style="float:right"><a class="active" href="#about">About</a></li>
+      </ul>
         <form class="user-form">
             <h3>Create Username</h3>
             <input type="text" name="username" placeholder="Username"/>
@@ -23,6 +31,7 @@
         <div id="maze">
 
         </div>
+
     </main>
 
     <script src="./src/index.js"></script>
