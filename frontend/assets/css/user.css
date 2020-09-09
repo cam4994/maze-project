@@ -1,33 +1,20 @@
-#right-container {
-    height: 100%;
+.split {
+    height: 50%;
     width: 25%;
-    margin: 20px;
-    float: right;
-
-    vertical-align: middle;
-    text-align:center;
-    border: 1px solid rgb(158, 165, 149);
-
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
   }
 
-#maze {
-    height: 100%;
-    width: 75%;
-    float: left;
-}
-
-  #scoreMaze{
-      margin: 10px;
+.left {
+    left: 0;
   }
-  #timerMaze{
-      margin: 10px;
-      padding-bottom: 10px;
+  
+  .right {
+    right: 0;
   }
-
-.hidden {
-    display: none;
-}
-
 
 #start-game {
     padding: 3px 3px;
@@ -41,60 +28,64 @@
     cursor: pointer;
 }
 
-.newUser{
-    display:block;
-    
-    height: 100%;
-    width: 25%;
-    margin: 20px;
-    float: right;
-    text-align:center;
-    border: 3px solid rgb(158, 165, 149);
-}
-.login{
-    display:none;
-    height: 100%;
-    width: 25%;
-    margin: 20px;
-    float: right;
-
-    vertical-align: middle;
-    text-align:center;
-    border: 1px solid rgb(158, 165, 149);
-}
-
-#maze div {
-    display: block;
-    height: 20px;
-    width: auto;
-    margin: 0;
+#maze-timer {
+    /* border-width: 5px;
+    border-style: solid;
+    overflow: auto; */
 }
 
 b {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 
 b[gorilla]::before {
     content: "🦍";
-    font-size: 15px;
+    font-size: 20px;
 }
 
 b[banana]::before {
     content: "🍌";
-    font-size: 15px;
+    font-size: 20px;
 }
 
-b[w] {
-    background: black;
+b[w]::before {
+    content: "🌳";
+    font-size: 25px;
 }
 
 b[g] {
     background: red;
 }
 
-b[e] {
-    background: green;
+b[e]::before {
+    content: "🏠";
+    font-size:25px;
+}
+
+.container{
+    display:grid;
+    grid-template-columns: 60% 1fr;
+    grid-template-rows:50px 1fr 100px;
+    height:100%;
+    grid-gap:20px;
+    grid-template-areas:
+    "header header"
+    "main side"
+}
+
+.nav-bar{
+    grid-area:header;
+    height: 70px;
+}
+
+.left_container{
+    grid-area:main;
+    border-right-style: dotted;
+}
+
+.right_container{
+    grid-area:side;
 }

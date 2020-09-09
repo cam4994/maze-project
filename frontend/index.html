@@ -5,81 +5,52 @@
     <title>Maze Project</title>
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/nav.css">
-    <link rel="stylesheet" href="assets/css/form.css">
   </head>
   <body>
 
     <main>
-  <div class="nav-bar">
-      <ul>
-        <li><a href="#leaderboard">Leaderboard</a></li>
-        <li><a href="#maze">New Maze</a></li>
-        <li style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
-      </ul>
-  </div>
-
-  <!-- <div class="form-popup" id="myForm">
-    <form action="/action_page.php" class="form-container">
-      <h1>Login</h1>
-  
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" required>
-  
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-  
-      <button type="submit" class="btn">Login</button>
-      <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
-  </div> -->
-  <!-- JavaScript- for form
-    function openForm() {
-      document.getElementById("myForm").style.display = "block";
-  }
-  
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }   -->
-
-        <div class = "newUser">
-          <form class="user-form">
-              <h3>Create Username</h3>
-              <input type="text" name="username" placeholder="Username"/>
-              <input type="password" name="password" placeholder="Password"/>
-              <button type="submit">Create</button>
-          </form>
-        </div>
-        <div class = "login">
-          <form class="login-form">
-              <h3>Log In</h3>
-              <input type="text" name="username" placeholder="Username"/>
-              <input type="password" name="password" placeholder="Password"/>
-              <button type="submit">Log In</button>
-          </form>
-        </div>
-        <div id="right-container">
-
-        </div>
-        <div id="maze">
-
-        </div>
-
-        <div id="container">
-            <button id="start-game">Start Game</button>
-
-            <div id ="timerMaze">
-                <h2>Timer</h2>
-                <p id ="timer-display">00:00</p> 
+      <div class="container">
+        <div class="nav-bar">
+            <ul>
+              <li id="create-user"><a href="#">New User</a></li>
+              <li id="login-form"><a href="#">Login to Play</a></li>
+              <li><a href="#leaderboard">Leaderboard</a></li>
+              <li><a href="#maze">New Maze</a></li>
+              <li style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            </ul>
+        </div>    
+          <div class="left_container">
+            <div id="maze">
             </div>
+          </div>
+          <div class="right_container">
 
-            <br>
-            <br>
+            <div id="score-container" class="split right">
+                <button id="start-game">Start Game</button>
+                <div id ="maze-timer">
+                    <h2>Timer</h2>
+                    <p id ="timer-display">00:00</p> 
+                </div><br><br>
+                <div id ="score">
+                    <h2>Score</h2>
+                    <p id ="score-count"></p> 
 
-            <div id ="scoreMaze">
-                <h2>Score</h2>
-                <p id ="score-count"></p> 
+                  <form class="user-form">
+                    <h3>Create Username</h3>
+                    <input type="text" name="username" placeholder="Username"/>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <button type="submit">Create</button>
+                  </form>
+                  <form class="login-form">
+                    <h3>Log In</h3>
+                    <input type="text" name="username" placeholder="Username"/>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <button type="submit">Log In</button>
+                   </form>
+
+                </div>
             </div>
-
+          </div>
         </div>
        
     </main>
@@ -87,6 +58,5 @@
     <script src="./src/index.js"></script>
     
     <script src="./src/maze.js"></script>
-    
   </body>
 </html>
