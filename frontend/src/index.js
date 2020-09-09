@@ -4,9 +4,32 @@ document.addEventListener("DOMContentLoaded", () => {
     let score;
     let timer;
     let scoreCount;
-    createMaze()
-    addBananas()
+    let setting;
+
+    document.getElementById("mode1").addEventListener('click', (e)=>{
+        let setting = 31;
+        createMaze(setting)
+        addBananas()
+        console.log(setting)
+        console.log(1)
+        })
+    document.getElementById("mode2").addEventListener('click', (e)=>{
+        let setting = 41;
+        createMaze(setting)
+        addBananas()
+        console.log(setting)
+        console.log(2)
+        })
+    document.getElementById("mode3").addEventListener('click', (e)=>{
+        let setting = 51;
+        createMaze(setting)
+        addBananas()
+        console.log(setting)
+        console.log(3)
+        })
+
     document.getElementById("start-game").addEventListener("click", startGame)
+    
 
     function startGame() {
         timerCount()
@@ -161,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(scoreCount)
         }
     }
-    function createMaze() {
+    function createMaze(setting) {
 
         function generate(dimensions) {
             maze = new Array();
@@ -289,7 +312,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(31);
+        generate(setting);
+        console.log('generate maze');
+        console.log(setting)
         display();
     }
 
