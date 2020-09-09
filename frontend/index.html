@@ -9,39 +9,48 @@
   <body>
 
     <main>
-  <div class="nav-bar">
-      <ul>
-        <li><a href="#leaderboard">Leaderboard</a></li>
-        <li><a href="#maze">New Maze</a></li>
-        <li style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
-      </ul>
-  </div>
-
-        <form class="user-form">
-            <h3>Create Username</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
-            <button type="submit">Create</button>
-        </form>
-        <form class="login-form">
-            <h3>Log In</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
-            <button type="submit">Log In</button>
-        </form>
-        <div id="maze">
-
-        </div>
-        <div id="right-container" class="split right">
-            <button id="start-game">Start Game</button>
-            <div id ="maze-timer">
-                <h2>Timer</h2>
-                <p id ="timer-display">00:00</p> 
-            </div><br><br>
-            <div id ="score">
-                <h2>Score</h2>
-                <p id ="score-count"></p> 
+      <div class="container">
+        <div class="nav-bar">
+            <ul>
+              <li id="create-user"><a href="#">New User</a></li>
+              <li id="login-form"><a href="#">Login to Play</a></li>
+              <li><a href="#leaderboard">Leaderboard</a></li>
+              <li><a href="#maze">New Maze</a></li>
+              <li style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            </ul>
+        </div>    
+          <div class="left_container">
+            <div id="maze">
             </div>
+          </div>
+          <div class="right_container">
+
+            <div id="score-container" class="split right">
+                <button id="start-game">Start Game</button>
+                <div id ="maze-timer">
+                    <h2>Timer</h2>
+                    <p id ="timer-display">00:00</p> 
+                </div><br><br>
+                <div id ="score">
+                    <h2>Score</h2>
+                    <p id ="score-count"></p> 
+
+                  <form class="user-form">
+                    <h3>Create Username</h3>
+                    <input type="text" name="username" placeholder="Username"/>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <button type="submit">Create</button>
+                  </form>
+                  <form class="login-form">
+                    <h3>Log In</h3>
+                    <input type="text" name="username" placeholder="Username"/>
+                    <input type="password" name="password" placeholder="Password"/>
+                    <button type="submit">Log In</button>
+                   </form>
+
+                </div>
+            </div>
+          </div>
         </div>
        
     </main>

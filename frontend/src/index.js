@@ -272,4 +272,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         display()
     }
+
+    const loginForm = document.querySelector('#login-form');
+    loginForm.addEventListener('click', loginUser);
+
+    function loginUser(){
+        const container = document.querySelector('.right_container');
+        const a = document.createElement('h2');
+        a.innerHTML = "Login";
+        container.append(a);
+    }
 })
