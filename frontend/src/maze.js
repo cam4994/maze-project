@@ -71,11 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML = `
         <form class="user-form">
-            <h3>Create Username</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <button type="submit">Create</button>
-        </form>`
-        rightContainer.append(div)
+            <h1>Sign In</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="submit" name="submit" value="Create">
+        </form>` 
+      rightContainer.append(div)
 
         let createForm = document.querySelector('.user-form')
         createForm.addEventListener('submit', (e) => {
@@ -88,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML = `
         <form class="login-form">
-            <h3>Log In</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <button type="submit">Log In</button>
+            <h1>Log In</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="submit" name="submit" value="Log In">
         </form>
         `
         rightContainer.append(div)
