@@ -1,13 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
     let maze;
-    let gate; 
+    let gate;
     let score;
     let timer;
     let scoreCount;
     let totalSeconds;
-    createMaze()
-    addBananas()
-    document.getElementById("start-game").addEventListener("click", startGame)
+    let setting;
+
+    let currentUser = document.querySelector('#user-icon')
+    console.log(currentUser.dataset.id)
+    if (parseInt(currentUser.dataset.id) > 0) {
+        console.log("hello")
+        document.getElementById('mode1').addEventListener('click', (e) => {
+            console.log("lkjda;sflkja;dlskj")
+            setting = 31;
+            createMaze(setting)
+            addBananas()
+        })
+        document.getElementById("mode2").addEventListener('click', (e) => {
+            setting = 41;
+            createMaze(setting)
+            addBananas()
+        })
+        document.getElementById("mode3").addEventListener('click', (e) => {
+            setting = 51;
+            createMaze(setting)
+            addBananas()
+        })
+    }
+
+
+
+    // document.getElementById("start-game").addEventListener("click", startGame)
+
 
     function startGame() {
         timerCount()
@@ -83,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY - 1
                     display()
                     winGame()
-                //Check if gorilla is moving to a banana square
+                    //Check if gorilla is moving to a banana square
                 } else if (maze[locationY - 1][locationX] == "banana") {
                     // Move gorilla up
                     maze[locationY - 1][locationX] = "gorilla"
@@ -178,18 +203,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 body: JSON.stringify({
                     "user_id": userID,
-                    "maze_id": mazeID, 
-                    "time": totalSeconds, 
+                    "maze_id": mazeID,
+                    "time": totalSeconds,
                     "score": score
                 })
             }
-    
+
             fetch("http://localhost:3000/scores", configObj)
                 .then(resp => resp.json())
                 .then(score => console.log(score))
         }
     }
-    function createMaze() {
+    function createMaze(setting) {
 
         function generate(dimensions) {
             maze = new Array();
@@ -317,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(17);
+        generate(setting);
         display();
     }
 

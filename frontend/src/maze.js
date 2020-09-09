@@ -13,8 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <li id="create-user"><a href="#">New User</a></li>
             <li id="login-form"><a href="#">Login to Play</a></li>
             <li><a href="#leaderboard">Leaderboard</a></li>
-            <li style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
             `
+            let li = document.getElementById('user-icon')
+            li.setAttribute("data-id", 0)
+
             let createUser = document.getElementById('create-user')
             let loginUser = document.getElementById('login-form')
             createUser.addEventListener('click', addNewUser)
@@ -22,9 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             navBar.innerHTML = `
             <li><a href="#leaderboard">Leaderboard</a></li>
-            <li><a href="#maze">New Maze</a></li>
-            <li id="user-icon" data-id= "${current_user}"style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">New Maze</a>
+                <div class="dropdown-content">
+                    <a id="mode1" href="#maze">easy</a>
+                    <a id="mode2" href="#maze">medium</a>
+                    <a id="mode3" href="#maze">hard</a>
+                </div>
+            </li>
+            <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
             `
+            let li = document.getElementById('user-icon')
+            li.setAttribute("data-id", current_user)
         }
     }
 
