@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let score;
     let timer;
     let scoreCount;
+    let totalSeconds;
     createMaze()
     addBananas()
     document.getElementById("start-game").addEventListener("click", startGame)
@@ -28,8 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     min = `0${min}`
                 }
                 document.getElementById('timer-display').innerHTML = `${min}:${sec}`;
-                sec = parseInt(sec)
-                min = parseInt(min)
+                sec = parseInt(sec);
+                min = parseInt(min);
+                totalSeconds = (min * 60) + sec;
             }, 1000);
         }
 
@@ -159,6 +161,32 @@ document.addEventListener("DOMContentLoaded", () => {
             //Stop timer and score from counting
             clearInterval(timer)
             clearInterval(scoreCount)
+            saveGame()
+        }
+
+        function saveGame() {
+            //Create a post to Scores
+            let current_player = getElementById('user-icon')
+            let userID = current_player.dataset.id
+            // let mazeID = 
+
+            let configObj = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    "user_id": userID,
+                    "maze_id": mazeID, 
+                    "time": totalSeconds, 
+                    "score": score
+                })
+            }
+    
+            fetch("http://localhost:3000/scores", configObj)
+                .then(resp => resp.json())
+                .then(score => console.log(score))
         }
     }
     function createMaze() {
@@ -289,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(31);
+        generate(17);
         display();
     }
 

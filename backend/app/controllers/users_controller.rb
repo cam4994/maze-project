@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
     
     def create
-        user = User.new(username: params[:username], password: params[:password])
+        user = User.new(username: params[:username])
         if user.save 
-            session[:user_id] = user.id
             render json: user
         else
             render json: user.errors.full_messages
@@ -13,4 +12,5 @@ class UsersController < ApplicationController
     def show
         user = User.find(params[:id])
     end
+
 end
