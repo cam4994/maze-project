@@ -1,4 +1,4 @@
-ul {
+/* ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -25,70 +25,76 @@ ul {
   }
   
   /* Change the link color to #111 (black) on hover */
-  li a:hover {
+  /* li a:hover {
     background-color: #111;
   }
 
   li {
     border-right: 1px solid #bbb;
-  }
+  } */
   
   li:last-child {
     border-right: none;
     padding-right: 5px;
+    background-color: #111;
   }
 
   .avatar {
     vertical-align: middle;
     width: 30px;
     height: 30px;
+    background-color: #111;
   }
 
 
-.dropbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-/* 
-The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-  z-index: 1;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  z-index: 1;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-  z-index: 1;
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {
-    background-color: #3e8e41;}
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(78, 136, 81);
+    
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+    background-color: rgb(39, 66, 30);
+  }
+  
+  li.dropdown {
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #caeeca;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }

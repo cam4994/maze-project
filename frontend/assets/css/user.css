@@ -28,11 +28,11 @@
     cursor: pointer;
 }
 
-#maze-timer {
+/*#maze-timer {
     /* border-width: 5px;
     border-style: solid;
-    overflow: auto; */
-}
+    overflow: auto; 
+}*/
 
 b {
     display: inline-block;
