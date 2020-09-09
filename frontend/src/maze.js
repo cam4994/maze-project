@@ -39,10 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML=`
         <form class="user-form">
-            <h3>Create Username</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
-            <button type="submit">Create</button>
+            <h1>Sign In</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="password" name="password" placeholder="Password" autocomplete="off">
+            <input type="submit" name="submit" value="Create">
         </form>` 
       rightContainer.append(div)
 
@@ -57,10 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML=`
         <form class="login-form">
-            <h3>Log In</h3>
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
-            <button type="submit">Log In</button>
+            <h1>Log In</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="password" name="password" placeholder="Password" autocomplete="off">
+            <input type="submit" name="submit" value="Log In">
         </form>
         `
         rightContainer.append(div)
