@@ -39,24 +39,24 @@ body{
 
 b {
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 
 b[gorilla]::before {
     content: "🦍";
-    font-size: 20px;
+    font-size: 15px;
 }
 
 b[banana]::before {
     content: "🍌";
-    font-size: 20px;
+    font-size: 15x;
 }
 
 b[w]::before {
     content: "🌳";
-    font-size: 25px;
+    font-size: 20px;
 }
 
 b[g] {
@@ -65,7 +65,7 @@ b[g] {
 
 b[e]::before {
     content: "🏠";
-    font-size:25px;
+    font-size:20px;
 }
 
 .container{
