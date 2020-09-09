@@ -1,20 +1,33 @@
-.split {
-    height: 50%;
+#right-container {
+    height: 100%;
     width: 25%;
-    position: fixed;
-    z-index: 1;
-    bottom: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
+    margin: 20px;
+    float: right;
+
+    vertical-align: middle;
+    text-align:center;
+    border: 1px solid rgb(158, 165, 149);
+
   }
 
-.left {
-    left: 0;
+#maze {
+    height: 100%;
+    width: 75%;
+    float: left;
+}
+
+  #scoreMaze{
+      margin: 10px;
   }
-  
-  .right {
-    right: 0;
+  #timerMaze{
+      margin: 10px;
+      padding-bottom: 10px;
   }
+
+.hidden {
+    display: none;
+}
+
 
 #start-game {
     padding: 3px 3px;
@@ -28,33 +41,50 @@
     cursor: pointer;
 }
 
-#maze-timer {
-    /* border-width: 5px;
-    border-style: solid;
-    overflow: auto; */
+.newUser{
+    display:block;
+    
+    height: 100%;
+    width: 25%;
+    margin: 20px;
+    float: right;
+    text-align:center;
+    border: 3px solid rgb(158, 165, 149);
 }
-div {
+.login{
+    display:none;
+    height: 100%;
+    width: 25%;
+    margin: 20px;
+    float: right;
+
+    vertical-align: middle;
+    text-align:center;
+    border: 1px solid rgb(158, 165, 149);
+}
+
+#maze div {
     display: block;
-    height: 25px;
+    height: 20px;
     width: auto;
     margin: 0;
 }
 
 b {
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 
 b[gorilla]::before {
     content: "🦍";
-    font-size: 20px;
+    font-size: 15px;
 }
 
 b[banana]::before {
     content: "🍌";
-    font-size: 20px;
+    font-size: 15px;
 }
 
 b[w] {

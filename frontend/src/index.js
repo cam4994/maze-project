@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     let maze;
-    let gate;
+    let gate; 
     let score;
     let timer;
     let scoreCount;
@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
             score = 1000
             scoreCount = setInterval(function () {
                 document.getElementById('score-count').innerHTML = score;
-                score -= 20;
-            }, 1000);
+                score -= 2;
+            }, 100);
         }
     }
 
@@ -81,6 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY - 1
                     display()
                     winGame()
+                //Check if gorilla is moving to a banana square
+                } else if (maze[locationY - 1][locationX] == "banana") {
+                    // Move gorilla up
+                    maze[locationY - 1][locationX] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new Y position of gorilla, X is unchanged
+                    locationY = locationY - 1
+                    addToScore()
                 }
             } else if (event.key == "ArrowDown") {
                 event.preventDefault()
@@ -92,6 +101,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new Y position of gorilla, X is unchanged
                     locationY = locationY + 1
                     display()
+                } else if (maze[locationY + 1][locationX] == "banana") {
+                    // Move gorilla down
+                    maze[locationY + 1][locationX] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new Y position of gorilla, X is unchanged
+                    locationY = locationY + 1
+                    addToScore()
                 }
             } else if (event.key == "ArrowLeft") {
                 if (maze[locationY][locationX - 1] == "") {
@@ -102,6 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new X position of gorilla, Y is unchanged
                     locationX = locationX - 1
                     display()
+                } else if (maze[locationY][locationX - 1] == "banana") {
+                    // Move gorilla left
+                    maze[locationY][locationX - 1] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new X position of gorilla, Y is unchanged
+                    locationX = locationX - 1
+                    addToScore()
                 }
             } else if (event.key == "ArrowRight") {
                 if (maze[locationY][locationX + 1] == "") {
@@ -112,8 +137,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new X position of gorilla, Y is unchanged
                     locationX = locationX + 1
                     display()
+                } else if (maze[locationY][locationX + 1] == "banana") {
+                    // Move gorilla right
+                    maze[locationY][locationX + 1] = "gorilla"
+                    // Get rid of gorilla in old position
+                    maze[locationY][locationX] = ""
+                    // Set new X position of gorilla, Y is unchanged
+                    locationX = locationX + 1
+                    addToScore()
                 }
             }
+        }
+
+        function addToScore() {
+            score += 200;
+            // document.getElementById('score-count').innerHTML = score;
+            display()
         }
 
         function winGame() {
