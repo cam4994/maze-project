@@ -295,32 +295,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function keepScore() {
-            score = 1000
+            score = 100
             document.getElementById('score-count').innerHTML = score;
             scoreCount = setInterval(function () {
                 score -= 2;
                 document.getElementById('score-count').innerHTML = score;
+                if (score == 0){
+                    clearInterval(timer)
+                    clearInterval(scoreCount)
+                    document.querySelector('#music').pause()
+                    document.querySelector('#lose').play()
+                    saveGame()
+                }
             }, 100);
         }
+
         function bgMusic(){
              bg=document.querySelector('#music')
              bg.volume = 0.8;
-             bg.play()
-        }
-        function boundry(){
-            boop=document.querySelector('#wall')
-            boop.volume = 0.5;
-            boop.play()
-        }
-        function timeout(){
-            document.querySelector('#lose').play()
-    }
+             bg.play()}
+
         function lowTime(){
             beep=document.querySelector('#wall')
             beep.volume = 0.5;
             beep.play()
         }
-            }
+    }
 
     function display() {
         document.getElementById("maze").innerHTML = "";
@@ -371,6 +371,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY - 1
                     addToScore()
                 }
+                else if (maze[locationY - 1][locationX] == "w") {
+                     document.querySelector('#wall').play()
+                }
             } else if (event.key == "ArrowDown") {
                 event.preventDefault()
                 if (maze[locationY + 1][locationX] == "") {
@@ -390,6 +393,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY + 1
                     addToScore()
                 }
+                else if (maze[locationY + 1][locationX] == "w") {
+                    document.querySelector('#wall').play()
+                }
             } else if (event.key == "ArrowLeft") {
                 if (maze[locationY][locationX - 1] == "") {
                     // Move gorilla left
@@ -408,6 +414,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationX = locationX - 1
                     addToScore()
                 }
+                else if (maze[locationY][locationX - 1] == "w") {
+                    document.querySelector('#wall').play()
+                }
             } else if (event.key == "ArrowRight") {
                 if (maze[locationY][locationX + 1] == "") {
                     // Move gorilla right
@@ -425,6 +434,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new X position of gorilla, Y is unchanged
                     locationX = locationX + 1
                     addToScore()
+                }
+                else if (maze[locationY][locationX + 1] == "w") {
+                    document.querySelector('#wall').play()
                 }
             }
         }
