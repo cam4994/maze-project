@@ -6,6 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-easy_maze = Maze.create(dimensions: 17, difficulty: "Easy")
-medium_maze = Maze.create(dimensions: 25, difficulty: "Medium")
-hard_maze = Maze.create(dimensions: 31, difficulty: "Hard")
+easy_maze = Maze.create(dimensions: 25, difficulty: "Easy")
+medium_maze = Maze.create(dimensions: 31, difficulty: "Medium")
+hard_maze = Maze.create(dimensions: 37, difficulty: "Hard")

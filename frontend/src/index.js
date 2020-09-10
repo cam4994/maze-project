@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         function bgMusic(){
              bg=document.querySelector('#music')
-             bg.volume = 0.;
+             bg.volume = 0.8;
              bg.play()
         }
         function boundry(){
