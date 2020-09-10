@@ -1,16 +1,6 @@
 body{
     background-color: gainsboro;
 }
-.split {
-    height: 50%;
-    width: 25%;
-    position: fixed;
-    z-index: 1;
-    bottom: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
-
 
 #start-game {
     padding: 3px 3px;
@@ -54,8 +44,9 @@ b[w]::before {
     font-size: 20px;
 }
 
-b[g] {
-    background: red;
+b[g]::before {
+    content: "🕳";
+    font-size: 20px;
 }
 
 b[e]::before {
@@ -69,6 +60,8 @@ b[e]::before {
     grid-template-rows: 70px repeat(6, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 0px;
+    height:900px;
+
     }
 
 .nav-bar{ grid-area: 1 / 1 / 2 / 4; 
@@ -84,8 +77,11 @@ height: 70px;}
 
 
 .left_container{ grid-area: 2 / 1 / 10 / 3; 
-border-right-style: dotted;
-background: url("");
+    border-right-style: dotted;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(76, 175, 80, 0.3);
 }
 
 .right_container{ grid-area: 3 / 3 / 10 / 4; }
@@ -100,6 +96,7 @@ background: url("");
     color: black;
     text-transform: uppercase;
     font-weight: 500;
+    
 }
 
 .user-form input[type="text"],.user-form input[type="password"]{
@@ -191,3 +188,129 @@ background: url("");
 .login-form input[type="submit"]:hover{
     background: green;
 }
+
+/* select maze animated text */
+
+#select-maze {
+    cursor: default;
+    position: absolute;
+    top: 30px;
+    left: 200px;
+    height: 100px;
+    margin: auto;
+    display: block;
+
+  }
+  
+#select-maze span {
+    position: relative;
+    top: 20px;
+    display: inline-block;
+    -webkit-animation: bounce 0.3s ease infinite alternate;
+    font-size: 20px;
+    color: rgb(102, 96, 96);
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+      0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent,
+      0 9px 0 transparent, 0 10px 10px rgba(255, 255, 255, 0.4);
+  }
+  
+#select-maze span:nth-child(2) {
+    -webkit-animation-delay: 0.1s;
+  }
+  
+#select-maze span:nth-child(3) {
+    -webkit-animation-delay: 0.2s;
+  }
+  
+#select-mazespan:nth-child(4) {
+    -webkit-animation-delay: 0.3s;
+  }
+  
+#select-mazespan:nth-child(5) {
+    -webkit-animation-delay: 0.4s;
+  }
+  
+#select-maze span:nth-child(6) {
+    -webkit-animation-delay: 0.5s;
+  }
+  
+#select-maze span:nth-child(7) {
+    -webkit-animation-delay: 0.6s;
+  }
+  
+  #select-maze span:nth-child(8) {
+    -webkit-animation-delay: 0.2s;
+  }
+  
+  #select-maze span:nth-child(9) {
+    -webkit-animation-delay: 0.3s;
+  }
+  
+  #select-maze span:nth-child(10) {
+    -webkit-animation-delay: 0.4s;
+  }
+  
+  #select-maze span:nth-child(11) {
+    -webkit-animation-delay: 0.5s;
+  }
+  
+  #select-maze span:nth-child(12) {
+    -webkit-animation-delay: 0.6s;
+  }
+  
+  #select-maze span:nth-child(13) {
+    -webkit-animation-delay: 0.7s;
+  }
+  
+  #select-maze span:nth-child(14) {
+    -webkit-animation-delay: 0.8s;
+  }
+  
+  /* ANIMATION */
+  @-webkit-keyframes bounce {
+    100% {
+      top: -5px;
+      text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+        0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc, 0 9px 0 #ccc,
+        0 50px 25px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  /* welcome message */
+
+@import url(https://fonts.googleapis.com/css?family=Signika:700,300,600);
+
+#welcome-message {
+ font-size:5em;
+ font:bold 7.5vw/1.6 'Signika', sans-serif;
+ user-select:none;
+}
+
+#welcome-message span { display:inline-block; animation:float .2s ease-in-out infinite; }
+ @keyframes float {
+  0%,100%{ transform:none; }
+  33%{ transform:translateY(-1px) rotate(-2deg); }
+  66%{ transform:translateY(1px) rotate(2deg); }
+}
+
+span:nth-child(4n) { color:hsl(50, 75%, 55%); text-shadow:1px 1px hsl(50, 75%, 45%), 2px 2px hsl(50, 45%, 45%), 3px 3px hsl(50, 45%, 45%), 4px 4px hsl(50, 75%, 45%); }
+span:nth-child(4n-1) { color:hsl(135, 35%, 55%); text-shadow:1px 1px hsl(135, 35%, 45%), 2px 2px hsl(135, 35%, 45%), 3px 3px hsl(135, 35%, 45%), 4px 4px hsl(135, 35%, 45%); }
+span:nth-child(4n-2) { color:hsl(155, 35%, 60%); text-shadow:1px 1px hsl(155, 25%, 50%), 2px 2px hsl(155, 25%, 50%), 3px 3px hsl(155, 25%, 50%), 4px 4px hsl(140, 25%, 50%); }
+span:nth-child(4n-3) { color:hsl(30, 65%, 60%); text-shadow:1px 1px hsl(30, 45%, 50%), 2px 2px hsl(30, 45%, 50%), 3px 3px hsl(30, 45%, 50%), 4px 4px hsl(30, 45%, 50%); }
+
+#welcome-message span:nth-child(2){ animation-delay:.05s; }
+#welcome-message span:nth-child(3){ animation-delay:.1s; }
+#welcome-message span:nth-child(4){ animation-delay:.15s; }
+#welcome-message span:nth-child(5){ animation-delay:.2s; }
+#welcome-message span:nth-child(6){ animation-delay:.25s; }
+#welcome-message span:nth-child(7){ animation-delay:.3s; }
+#welcome-message span:nth-child(8){ animation-delay:.35s; }
+
+/* instruction */
+#instruction{
+    font-size: 20px;
+    color: gray;
+    text-align: center;
+    font-family: "Comic Sans MS";
+}
+  

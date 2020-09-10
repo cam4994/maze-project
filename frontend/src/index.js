@@ -6,11 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let scoreCount;
     let totalSeconds;
     let rightContainer = document.querySelector('.right_container')
+    let leftContainer = document.querySelector('.left_container')
     let navBar = document.getElementById('nav-bar-list')
     let current_user = 0;
     let mazeID;
     createNavBar() 
-
+    welcomeMessage()
+    
     function createNavBar() {
         navBar.textContent = ''
         if (checkForUser(current_user) == false) {
@@ -58,7 +60,46 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('leaderboard').addEventListener('click', showLeaderboard)
     }
 
+    function clearWelcome(){
+        const a = document.querySelector('#welcome-message')
+        if (a){
+        a.remove()}
+        rightContainer.innerHTML=''
+    }
+
+    function welcomeMessage(){
+        const h1 = document.createElement('h1')
+        h1.setAttribute('id', 'welcome-message')
+        h1.innerHTML=`<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span></h1>`
+        leftContainer.appendChild(h1)
+    
+        const h3 = document.createElement('h3')
+        h3.setAttribute('id', 'instruction')
+        h3.innerHTML=`
+        <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
+        rightContainer.appendChild(h3)
+    }
+
+    function selectMazeText(){
+        rightContainer.innerHTML=`
+        <h1 id="select-maze">
+        <span>↖</span>
+        <span>S</span>
+        <span>E</span>
+        <span>L</span>
+        <span>E</span>
+        <span>C</span>
+        <span>T</span>
+      </br>
+        <span>M</span>
+        <span>A</span>
+        <span>Z</span>
+        <span>E</span>
+      </h1>`
+    }
+
     function fetchMaze(id) {
+        clearWelcome()
         fetch(`http://localhost:3000/mazes/${id}`)
             .then(resp => resp.json())
             .then(maze => {
@@ -128,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // If the user successfully created a username or signed in, it will update the navbar and get rid of the form
                 if (checkForUser(user)) {
                     rightContainer.textContent = ""
+                    selectMazeText()
                     createNavBar()
                 // If the user gets an error message, it will add the error message to the p element at the end of the form
                 } else {
