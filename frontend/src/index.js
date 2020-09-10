@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let navBar = document.getElementById('nav-bar-list')
     let current_user = 0;
     let mazeID;
-    createNavBar() 
     welcomeMessage()
+    createNavBar() 
     
     function createNavBar() {
         navBar.textContent = ''
@@ -42,7 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <a id="mode3" href="#maze/">Hard</a>
                 </div>
             </li>
-            <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            <li id="user-icon" style="float:right" class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a>
+                <div class="dropdown-content">
+                    <a id="edit-user" href="#maze/">Edit Profile</a>
+                    <a id="delete-user" href="#maze/">Delete Profile</a>
+                </div>
+            </li>
             `
             let li = document.getElementById('user-icon')
             li.setAttribute("data-id", current_user)
@@ -56,6 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("mode3").addEventListener('click', (e) => {
                     fetchMaze(3)
                 })
+                document.getElementById("edit-user").addEventListener('click', (e) => {
+                    editUserForm()
+                })
+                document.getElementById("delete-user").addEventListener('click', (e) => {
+                    deleteUserForm()
+                })
+                
         }
         document.getElementById('leaderboard').addEventListener('click', showLeaderboard)
     }
@@ -130,6 +143,88 @@ document.addEventListener("DOMContentLoaded", () => {
             <br><br><button id="start-game">Start Game</button><br>
         `
         document.getElementById("start-game").addEventListener("click", startGame)
+    }
+
+    function editUserForm() {
+        rightContainer.textContent = ""
+        let div = document.createElement('div')
+        div.innerHTML = `
+        <form class="edit-form">
+            <h1>Edit Username</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="submit" value="Edit">
+            <p class="error-message"></p>
+        </form>` 
+        rightContainer.append(div)
+
+        let editForm = document.querySelector('.edit-form')
+        editForm.addEventListener('submit', editUser)
+    }
+
+    function editUser(event) {
+        event.preventDefault()
+        let username = event.target.username.value
+        let configObj = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                "username": username,
+            })
+        }
+
+        fetch(`http://localhost:3000/users/${current_user}`, configObj)
+            .then(resp => resp.json())
+            .then(user => { 
+                // If the user successfully created a username or signed in, it will update the navbar and get rid of the form
+                if (checkForUser(user)) {
+                    rightContainer.textContent = ""
+                    selectMazeText()
+                    createNavBar()
+                // If the user gets an error message, it will add the error message to the p element at the end of the form
+                } else {
+                    let errorMessage = document.querySelector('.error-message')
+                    errorMessage.textContent = `${user[0]}`
+                }
+            })    
+    }
+
+    function deleteUserForm() {
+        rightContainer.textContent = ""
+        let div = document.createElement('div')
+        div.innerHTML = `
+        <form class="delete-form">
+            <h1>Are you sure you want to delete your profile?</h1>
+            <input type="submit" value="YES">
+        </form>` 
+        rightContainer.append(div)
+
+        let deleteForm = document.querySelector('.delete-form')
+        deleteForm.addEventListener('submit', deleteUser)
+    }
+
+    function deleteUser() {
+        event.preventDefault()
+        let configObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+        }
+        fetch(`http://localhost:3000/users/${current_user}`, configObj)
+
+        //After deleting user, set current user to zero and add the instruction to right container
+        rightContainer.textContent = ""
+        current_user = 0
+        const h3 = document.createElement('h3')
+        h3.setAttribute('id', 'instruction')
+        h3.innerHTML=`
+        <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
+        rightContainer.appendChild(h3)
+        createNavBar()
     }
 
     function showLeaderboard() {
@@ -272,6 +367,9 @@ document.addEventListener("DOMContentLoaded", () => {
         keepScore()
         playGame()
         bgMusic()
+        //Get rid of start button once game starts
+        document.getElementById("start-game").remove()
+
         function timerCount() {
             let sec = 0;
             let min = 0;
@@ -298,10 +396,13 @@ document.addEventListener("DOMContentLoaded", () => {
             score = 1000
             document.getElementById('score-count').innerHTML = score;
             scoreCount = setInterval(function () {
-                score -= 2;
+                if (score > 0){
+                    score -= 1;
+                }
                 document.getElementById('score-count').innerHTML = score;
             }, 100);
         }
+
         function bgMusic(){
              bg=document.querySelector('#music')
              bg.volume = 0.8;
@@ -314,13 +415,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         function timeout(){
             document.querySelector('#lose').play()
-    }
+        }
         function lowTime(){
             beep=document.querySelector('#wall')
             beep.volume = 0.5;
             beep.play()
         }
-            }
+    }
 
     function display() {
         document.getElementById("maze").innerHTML = "";
@@ -389,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new Y position of gorilla, X is unchanged
                     locationY = locationY + 1
                     addToScore()
-                }
+                } 
             } else if (event.key == "ArrowLeft") {
                 if (maze[locationY][locationX - 1] == "") {
                     // Move gorilla left

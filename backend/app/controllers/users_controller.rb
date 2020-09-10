@@ -14,4 +14,18 @@ class UsersController < ApplicationController
         render json: user
     end
 
+    def update
+        puts params
+        user = User.find(params[:id])
+        if user.update(username: params[:username])
+            render json: user
+        else
+            render json: user.errors.full_messages
+        end
+    end
+
+    def destroy
+        user = User.find(params[:id])
+        user.delete
+    end
 end
