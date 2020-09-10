@@ -221,6 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timerCount()
         keepScore()
         playGame()
+        bgMusic()
         function timerCount() {
             let sec = 0;
             let min = 0;
@@ -250,6 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 score -= 2;
                 document.getElementById('score-count').innerHTML = score;
             }, 100);
+        }
+        function bgMusic(){
+             bg=document.querySelector('#music')
+             bg.volume = 0.8;
+             bg.play()
         }
     }
 
@@ -362,6 +368,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function addToScore() {
             score += 200;
+            item=document.querySelector('#get')
+            item.volume = 0.2;
+            item.play()
             display()
         }
 
@@ -369,6 +378,8 @@ document.addEventListener("DOMContentLoaded", () => {
             //Stop timer and score from counting
             clearInterval(timer)
             clearInterval(scoreCount)
+            document.querySelector('#music').pause()
+            document.querySelector('#win').play()
             saveGame()
         }
 
