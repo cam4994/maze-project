@@ -37,9 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">New Maze</a>
                 <div class="dropdown-content">
-                    <a id="mode1" href="#maze">Easy</a>
-                    <a id="mode2" href="#maze">Medium</a>
-                    <a id="mode3" href="#maze">Hard</a>
+                    <a id="mode1" href="#maze/">Easy</a>
+                    <a id="mode2" href="#maze/">Medium</a>
+                    <a id="mode3" href="#maze/">Hard</a>
                 </div>
             </li>
             <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
@@ -130,8 +130,55 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showLeaderboard() {
+        rightContainer.textContent= ''
+        // Create easy, medium and hard buttons
+        let easyButton = document.createElement('button')
+        easyButton.textContent = "Easy"
+        easyButton.addEventListener("click", (e)=> {
+            filterHighScores("easy")
+        })
+        let mediumButton = document.createElement('button')
+        mediumButton.textContent = "Medium"
+        mediumButton.addEventListener("click", (e)=> {
+            filterHighScores("medium")
+        })
+        let hardButton = document.createElement('button')
+        hardButton.textContent = "Hard"
+        hardButton.addEventListener("click", (e)=> {
+            filterHighScores("hard")
+        })
 
-        console.log("Yay leaderboard")
+        let h1= document.createElement('h1')
+        h1.textContent = "LEADERBOARD"
+        rightContainer.append(h1, easyButton, mediumButton, hardButton)
+
+        // Display High Scores
+        fetchHighScores("http://localhost:3000/scores")
+    }
+
+    function filterHighScores(difficulty) {
+        document.querySelector('.high-scores').remove()
+        fetchHighScores(`http://localhost:3000/scores/${difficulty}`)
+    }
+
+    function fetchHighScores(url) {
+        fetch(url)
+            .then(resp => resp.json())
+            .then(scores => displayScores(scores))
+    }
+
+    function displayScores(scores) {
+        let div = document.createElement('div')
+        div.classList.add('high-scores')
+        scores.forEach(score => {
+            let username = Object.keys(score)[0]
+            let userScore = score[username][0]
+            let difficulty = score[username][1]
+            let p = document.createElement('p')
+            p.textContent = `${username} Score: ${userScore}, Difficulty: ${difficulty}`
+            div.append(p)
+        });
+        rightContainer.append(div)
     }
 
     function checkForUser(user) {

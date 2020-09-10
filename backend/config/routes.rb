@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  resources :scores
+  resources :scores, only: [:index, :create]
   resources :mazes
   resources :users
   post '/login', to: 'sessions#create'
   delete '/signout', to: 'sessions#destroy'
+  get '/scores/easy', to: 'scores#easy'
+  get '/scores/medium', to: 'scores#medium'
+  get '/scores/hard', to: 'scores#hard'
 end

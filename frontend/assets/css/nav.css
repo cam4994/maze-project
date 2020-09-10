@@ -1,4 +1,4 @@
-  li:last-child {
+#nav-bar-list li:last-child {
     border-right: none;
     padding-right: 5px;
     background-color: #111;
