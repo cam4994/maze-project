@@ -332,7 +332,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function saveGame() {
             //Create a post to Scores
-            console.log(totalSeconds)
             let configObj = {
                 method: "POST",
                 headers: {
