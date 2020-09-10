@@ -268,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timerCount()
         keepScore()
         playGame()
+        bgMusic()
         function timerCount() {
             let sec = 0;
             let min = 0;
@@ -298,7 +299,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('score-count').innerHTML = score;
             }, 100);
         }
+        function bgMusic(){
+             bg=document.querySelector('#music')
+             bg.volume = 0.;
+             bg.play()
+        }
+        function boundry(){
+            boop=document.querySelector('#wall')
+            boop.volume = 0.5;
+            boop.play()
+        }
+        function timeout(){
+            document.querySelector('#lose').play()
     }
+        function lowTime(){
+            beep=document.querySelector('#wall')
+            beep.volume = 0.5;
+            beep.play()
+        }
+            }
 
     function display() {
         document.getElementById("maze").innerHTML = "";
@@ -409,6 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function addToScore() {
             score += 200;
+            item=document.querySelector('#get')
+            item.volume = 0.2;
+            item.play()
             display()
         }
 
@@ -416,6 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
             //Stop timer and score from counting
             clearInterval(timer)
             clearInterval(scoreCount)
+            document.querySelector('#music').pause()
+            document.querySelector('#win').play()
             saveGame()
         }
 
