@@ -292,20 +292,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 min = parseInt(min);
                 totalSeconds = (min * 60) + sec;
             }, 1000);
+            tickTock()
         }
 
         function keepScore() {
-            score = 100
+            score = 1000
             document.getElementById('score-count').innerHTML = score;
             scoreCount = setInterval(function () {
                 score -= 2;
                 document.getElementById('score-count').innerHTML = score;
                 if (score == 0){
-                    clearInterval(timer)
-                    clearInterval(scoreCount)
-                    document.querySelector('#music').pause()
-                    document.querySelector('#lose').play()
-                    saveGame()
+                    loseGame()
                 }
             }, 100);
         }
@@ -315,10 +312,10 @@ document.addEventListener("DOMContentLoaded", () => {
              bg.volume = 0.8;
              bg.play()}
 
-        function lowTime(){
-            beep=document.querySelector('#wall')
-            beep.volume = 0.5;
-            beep.play()
+        function tickTock(){
+            clk=document.querySelector('#time')
+            clk.volume = 0.5;
+            clk.play()
         }
     }
 
@@ -454,7 +451,17 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(timer)
             clearInterval(scoreCount)
             document.querySelector('#music').pause()
+            document.querySelector('#time').pause()
             document.querySelector('#win').play()
+            saveGame()
+        }
+        function loseGame() {
+            //Stop timer and score from counting
+            clearInterval(timer)
+            clearInterval(scoreCount)
+            document.querySelector('#music').pause()
+            document.querySelector('#time').pause()
+            document.querySelector('#lose').play()
             saveGame()
         }
 
