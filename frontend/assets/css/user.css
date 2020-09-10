@@ -2,6 +2,35 @@ body{
     background-color: gainsboro;
 }
 
+#score-container{
+  background: rgb(200, 241, 196)85, 140, 140);
+  text-align: center;
+  position: relative;
+  border-radius: 40px;
+  border-style: solid;
+  border-color: green;
+}
+
+#timer-text, #score-text, #timer-display, #score-count{
+  font-family: 'Grandstander';
+  font-size: 30px;
+}
+
+#timer-text, #score-text{
+  font-weight: bold;
+}
+
+#alarm-icon{
+  font-size: 30px;
+  color: gray;
+}
+
+#favorite-icon{
+  font-size: 30px;
+  color: lightcoral;
+}
+
+
 #start-game {
     padding: 3px 3px;
     font-size: 14px;
@@ -30,13 +59,13 @@ b {
 
 
 b[gorilla]::before {
-    content: "🦍";
-    font-size: 15px;
+    content: "🐒";
+    font-size: 20px;
 }
 
 b[banana]::before {
     content: "🍌";
-    font-size: 15px;
+    font-size: 20px;
 }
 
 b[w]::before {
@@ -84,7 +113,9 @@ height: 70px;}
     background: rgba(76, 175, 80, 0.3);
 }
 
-.right_container{ grid-area: 3 / 3 / 10 / 4; }
+.right_container{ grid-area: 3 / 3 / 10 / 4; 
+text-align: center;
+}
 
 .user-form{
     width: 200px;
@@ -199,7 +230,6 @@ height: 70px;}
     height: 100px;
     margin: auto;
     display: block;
-
   }
   
 #select-maze span {
@@ -208,7 +238,7 @@ height: 70px;}
     display: inline-block;
     -webkit-animation: bounce 0.3s ease infinite alternate;
     font-size: 20px;
-    color: rgb(102, 96, 96);
+    color: darkslategray;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
       0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent,
       0 9px 0 transparent, 0 10px 10px rgba(255, 255, 255, 0.4);
@@ -284,6 +314,7 @@ height: 70px;}
  font-size:5em;
  font:bold 7.5vw/1.6 'Signika', sans-serif;
  user-select:none;
+ text-align: center;
 }
 
 #welcome-message span { display:inline-block; animation:float .2s ease-in-out infinite; }
@@ -313,4 +344,83 @@ span:nth-child(4n-3) { color:hsl(30, 65%, 60%); text-shadow:1px 1px hsl(30, 45%,
     text-align: center;
     font-family: "Comic Sans MS";
 }
-  
+/* start button */
+#start-game {
+  min-width: 200px;
+  min-height: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #313133;
+  background: darkseagreen;
+  background: linear-gradient(90deg, darkseagreen 0%, darkseagreen 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px lightgoldenrodyellow;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+  }
+
+#start-game::before {
+content: '';
+  border-radius: 1000px;
+  min-width: calc(200px + 12px);
+  min-height: calc(50px + 12px);
+  border: 6px solid darkseagreen;
+  box-shadow: 0 0 60px lightgoldenrodyellow;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+#start-game:hover, #start-game:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+#start-game:hover::before, #start-game:focus::before {
+  opacity: 1;
+}
+
+#start-game::after {
+  content: '';
+  width: 30px; height: 30px;
+  border-radius: 100%;
+  border: 6px solid lightgoldenrodyellow;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+#start-game:hover::after, #start-game:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+.error-message{
+  color: red;
+}
