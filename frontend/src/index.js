@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function welcomeMessage(){
         const h1 = document.createElement('h1')
         h1.setAttribute('id', 'welcome-message')
-        h1.innerHTML=`<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span></h1>`
+        h1.innerHTML=`<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span><br><span>🐵</span></h1>`
         leftContainer.appendChild(h1)
     
         const h3 = document.createElement('h3')
@@ -113,18 +113,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function addScoreAndTimer() {
         rightContainer.textContent = ''
-        rightContainer.innerHTML = `
+        rightContainer.innerHTML = `<br><br>
             <div id="score-container">
-                <button id="start-game">Start Game</button>
+            <br>
                 <div id ="maze-timer">
-                    <h2>Timer</h2>
+                    <i id="alarm-icon" class="material-icons">access_alarm</i>
+                    <h2 id="timer-text">Timer</h2>
                     <p id ="timer-display">00:00</p> 
-                </div><br><br>
+                </div><br>
                 <div id ="score">
-                    <h2>Score</h2>
-                    <p id ="score-count"></p> 
+                    <i id="favorite-icon"  class="material-icons">favorite</i>
+                    <h2 id="score-text">Score</h2>
+                    <p id ="score-count"></p> <br>
                 </div>
             </div>
+            <br><br><button id="start-game">Start Game</button><br>
         `
         document.getElementById("start-game").addEventListener("click", startGame)
     }
