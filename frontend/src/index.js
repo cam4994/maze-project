@@ -536,6 +536,27 @@ document.addEventListener("DOMContentLoaded", () => {
             item.volume = 0.2;
             item.play()
             display()
+
+            let div = document.querySelector('#score')
+            let p = document.createElement('p')
+            p.textContent = "+200"
+            p.setAttribute('class', 'add-to-score')
+            div.append(p)
+            fade(p)
+        }
+
+        function fade(element) {
+            // initial opacity
+            let opac = 1  
+            let fadeTimer = setInterval(function () {
+                if (opac <= 0.1){
+                    clearInterval(fadeTimer);
+                    element.style.display = 'none';
+                }
+                element.style.opacity = opac;
+                element.style.filter = 'alpha(opacity=' + opac * 100 + ")";
+                opac -= opac * 0.1;
+            }, 70);
         }
 
         function winGame() {
