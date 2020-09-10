@@ -254,10 +254,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         function bgMusic(){
              bg=document.querySelector('#music')
-             bg.volume = 0.8;
+             bg.volume = 0.;
              bg.play()
         }
+        function boundry(){
+            boop=document.querySelector('#wall')
+            boop.volume = 0.5;
+            boop.play()
+        }
+        function timeout(){
+            document.querySelector('#lose').play()
     }
+        function lowTime(){
+            beep=document.querySelector('#wall')
+            beep.volume = 0.5;
+            beep.play()
+        }
+            }
 
     function display() {
         document.getElementById("maze").innerHTML = "";
