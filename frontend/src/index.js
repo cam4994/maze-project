@@ -1,12 +1,207 @@
 document.addEventListener("DOMContentLoaded", () => {
     let maze;
-    let gate; 
+    let gate;
     let score;
     let timer;
     let scoreCount;
-    createMaze()
-    addBananas()
-    document.getElementById("start-game").addEventListener("click", startGame)
+    let totalSeconds;
+    let setting;
+    let rightContainer = document.querySelector('.right_container')
+    let leftContainer = document.querySelector('.left_container')
+    let navBar = document.getElementById('nav-bar-list')
+    let current_user = 0;
+    createNavBar() 
+    welcomeMessage()
+
+    function createNavBar() {
+        // If there is a current user signed in
+        navBar.textContent = ''
+        if (checkForUser(current_user) == false) {
+            navBar.innerHTML = `
+            <li id="create-user"><a href="#">New User</a></li>
+            <li id="login-form"><a href="#">Login to Play</a></li>
+            <li><a href="#leaderboard">Leaderboard</a></li>
+            <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            `
+            let li = document.getElementById('user-icon')
+            li.setAttribute("data-id", 0)
+
+            let createUser = document.getElementById('create-user')
+            let loginUser = document.getElementById('login-form')
+            createUser.addEventListener('click', addNewUser)
+            loginUser.addEventListener('click', addLoginUser)
+        } else {
+            navBar.innerHTML = `
+            <li><a href="#leaderboard">Leaderboard</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">New Maze</a>
+                <div class="dropdown-content">
+                    <a id="mode1" href="#maze/">easy</a>
+                    <a id="mode2" href="#maze/">medium</a>
+                    <a id="mode3" href="#maze/">hard</a>
+                </div>
+            </li>
+            <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
+            `
+            let li = document.getElementById('user-icon')
+            li.setAttribute("data-id", current_user)
+
+                document.getElementById('mode1').addEventListener('click', (e) => {
+                    console.log("lkjda;sflkja;dlskj")
+                    clearWelcome()
+                    setting = 17;
+                    createMaze(setting)
+                    showScoreContainer()
+                    addBananas()
+                })
+                document.getElementById("mode2").addEventListener('click', (e) => {
+                    clearWelcome()
+                    setting = 25;
+                    showScoreContainer()
+                    createMaze(setting)
+                    addBananas()
+                })
+                document.getElementById("mode3").addEventListener('click', (e) => {
+                    clearWelcome()
+                    setting = 31;
+                    showScoreContainer()
+                    createMaze(setting)
+                    addBananas()
+                })
+        }
+    }
+
+    function clearWelcome(){
+        const a = document.querySelector('#welcome-message')
+        if (a){
+        a.remove()}
+        rightContainer.innerHTML=''
+    }
+
+    function welcomeMessage(){
+        const h1 = document.createElement('h1')
+        h1.setAttribute('id', 'welcome-message')
+        h1.innerHTML=`<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span></h1>`
+        leftContainer.appendChild(h1)
+    
+        const h3 = document.createElement('h3')
+        h3.setAttribute('id', 'instruction')
+        h3.innerHTML=`
+        <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
+        rightContainer.appendChild(h3)
+    }
+
+    function showScoreContainer(){
+        const div = document.createElement('div')
+        div.setAttribute('id', 'score-container')
+        div.innerHTML=`<br>
+            <button id="start-game">Start Game</button>
+            <div id="maze-timer">
+            <h2>Timer</h2>
+            <p id="timer-display">00:00</p>
+            </div><br>
+            <div id="score">
+            <h2>Score</h2>
+            <p id="score-count"></p>
+            </div>`
+        rightContainer.appendChild(div)
+        document.getElementById("start-game").addEventListener("click", startGame)
+    }
+
+    function checkForUser(user) {
+        if (user["id"]) {
+            current_user = user["id"]
+            return true
+        } else if (!user["id"] && user > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    function createOrLoginUser(event, url) {
+        event.preventDefault()
+
+        let username = event.target.username.value
+        // Clear out username
+        event.target.username.value = ''
+
+        let configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                "username": username,
+            })
+        }
+
+        fetch(url, configObj)
+            .then(resp => resp.json())
+            .then(user => {
+                checkForUser(user)
+                createNavBar()
+            })
+            
+    }
+
+    function addNewUser() {
+        rightContainer.textContent = ""
+        let div = document.createElement('div')
+        div.innerHTML = `
+        <form class="user-form">
+            <h1>Create User</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="submit" name="submit" value="Create">
+        </form>` 
+      rightContainer.append(div)
+
+        let createForm = document.querySelector('.user-form')
+        createForm.addEventListener('submit', (e) => {
+            rightContainer.innerHTML = ''
+            selectMazeText()
+            createOrLoginUser(e, "http://localhost:3000/users")
+        })
+    }
+
+    function addLoginUser() {
+        rightContainer.textContent = ''
+        let div = document.createElement('div')
+        div.innerHTML = `
+        <form class="login-form">
+            <h1>Log In</h1>
+            <input type="text" name="username" placeholder="Username" autocomplete="off">
+            <input type="submit" name="submit" value="Log In">
+        </form>
+        `
+        rightContainer.append(div)
+
+        let logInForm = document.querySelector('.login-form')
+        logInForm.addEventListener('submit', (e) => {
+            rightContainer.innerHTML = ''
+            selectMazeText()
+            createOrLoginUser(e, "http://localhost:3000/login")
+        })
+    }
+
+    function selectMazeText(){
+        rightContainer.innerHTML=`
+        <h1 id="select-maze">
+        <span>↖</span>
+        <span>S</span>
+        <span>E</span>
+        <span>L</span>
+        <span>E</span>
+        <span>C</span>
+        <span>T</span>
+      </br>
+        <span>M</span>
+        <span>A</span>
+        <span>Z</span>
+        <span>E</span>
+      </h1>`
+    }
 
     function startGame() {
         timerCount()
@@ -28,8 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     min = `0${min}`
                 }
                 document.getElementById('timer-display').innerHTML = `${min}:${sec}`;
-                sec = parseInt(sec)
-                min = parseInt(min)
+                sec = parseInt(sec);
+                min = parseInt(min);
+                totalSeconds = (min * 60) + sec;
             }, 1000);
         }
 
@@ -81,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY - 1
                     display()
                     winGame()
-                //Check if gorilla is moving to a banana square
+                    //Check if gorilla is moving to a banana square
                 } else if (maze[locationY - 1][locationX] == "banana") {
                     // Move gorilla up
                     maze[locationY - 1][locationX] = "gorilla"
@@ -159,9 +355,35 @@ document.addEventListener("DOMContentLoaded", () => {
             //Stop timer and score from counting
             clearInterval(timer)
             clearInterval(scoreCount)
+            saveGame()
+        }
+
+        function saveGame() {
+            //Create a post to Scores
+            let current_player = getElementById('user-icon')
+            let userID = current_player.dataset.id
+            // let mazeID = 
+
+            let configObj = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    "user_id": userID,
+                    "maze_id": mazeID,
+                    "time": totalSeconds,
+                    "score": score
+                })
+            }
+
+            fetch("http://localhost:3000/scores", configObj)
+                .then(resp => resp.json())
+                .then(score => console.log(score))
         }
     }
-    function createMaze() {
+    function createMaze(setting) {
 
         function generate(dimensions) {
             maze = new Array();
@@ -289,7 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("maze").innerHTML += output;
             }
         }
-        generate(31);
+        generate(setting);
         display();
     }
 
