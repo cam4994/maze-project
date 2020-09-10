@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <a id="mode3" href="#maze/">Hard</a>
                 </div>
             </li>
+            <li id="my-scores"><a href="#scores/">My High Scores</a></li>
             <li id="user-icon" style="float:right" class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a>
                 <div class="dropdown-content">
@@ -67,6 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 document.getElementById("delete-user").addEventListener('click', (e) => {
                     deleteUserForm()
+                })
+                document.getElementById("my-scores").addEventListener('click', (e) => {
+                    showMyScores()
                 })
                 
         }
@@ -225,6 +229,29 @@ document.addEventListener("DOMContentLoaded", () => {
         <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
         rightContainer.appendChild(h3)
         createNavBar()
+    }
+
+    function showMyScores() {
+        fetch(`http://localhost:3000/users/${current_user}`)
+            .then(resp => resp.json())
+            .then(scores => {
+                let username = Object.keys(scores)[0]
+                let h1 = document.createElement('h1')
+                h1.textContent = `User: ${username}`
+                let h2 = document.createElement('h2')
+                h2.textContent = "High Scores"
+                gameScores = scores[username]
+                rightContainer.textContent= ''
+                let div = document.createElement('div')
+                gameScores.forEach(score => {
+                    let gameScore = score[0]
+                    let difficulty = score[1]
+                    let p = document.createElement('p')
+                    p.textContent= `Score: ${gameScore}  Difficulty: ${difficulty}`
+                    div.append(p)
+                })
+                rightContainer.append(h1, h2, div)
+            })
     }
 
     function showLeaderboard() {
@@ -531,7 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         function addToScore() {
-            score += 200;
+            score += 300;
             item=document.querySelector('#get')
             item.volume = 0.2;
             item.play()
@@ -539,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let div = document.querySelector('#score')
             let p = document.createElement('p')
-            p.textContent = "+200"
+            p.textContent = "+300"
             p.setAttribute('class', 'add-to-score')
             div.append(p)
             fade(p)

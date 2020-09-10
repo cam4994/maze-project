@@ -11,11 +11,10 @@ class UsersController < ApplicationController
     
     def show
         user = User.find(params[:id])
-        render json: user
+        render json: user.my_scores
     end
 
     def update
-        puts params
         user = User.find(params[:id])
         if user.update(username: params[:username])
             render json: user
