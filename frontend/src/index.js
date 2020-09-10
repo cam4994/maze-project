@@ -5,20 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let timer;
     let scoreCount;
     let totalSeconds;
-    let setting;
     let rightContainer = document.querySelector('.right_container')
     let navBar = document.getElementById('nav-bar-list')
     let current_user = 0;
+    let mazeID;
     createNavBar() 
 
     function createNavBar() {
-        // If there is a current user signed in
         navBar.textContent = ''
         if (checkForUser(current_user) == false) {
+            // User not signed in 
             navBar.innerHTML = `
             <li id="create-user"><a href="#">New User</a></li>
             <li id="login-form"><a href="#">Login to Play</a></li>
-            <li><a href="#leaderboard">Leaderboard</a></li>
+            <li id="leaderboard"><a href="#leaderboard">Leaderboard</a></li>
             <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
             `
             let li = document.getElementById('user-icon')
@@ -29,14 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
             createUser.addEventListener('click', addNewUser)
             loginUser.addEventListener('click', addLoginUser)
         } else {
+            // User is signed in 
             navBar.innerHTML = `
-            <li><a href="#leaderboard">Leaderboard</a></li>
+            <li id="leaderboard"><a href="#leaderboard">Leaderboard</a></li>
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn">New Maze</a>
                 <div class="dropdown-content">
-                    <a id="mode1" href="#maze">easy</a>
-                    <a id="mode2" href="#maze">medium</a>
-                    <a id="mode3" href="#maze">hard</a>
+                    <a id="mode1" href="#maze">Easy</a>
+                    <a id="mode2" href="#maze">Medium</a>
+                    <a id="mode3" href="#maze">Hard</a>
                 </div>
             </li>
             <li id="user-icon" style="float:right"><a class="active" href="#user"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a></li>
@@ -45,24 +46,51 @@ document.addEventListener("DOMContentLoaded", () => {
             li.setAttribute("data-id", current_user)
 
                 document.getElementById('mode1').addEventListener('click', (e) => {
-                    console.log("lkjda;sflkja;dlskj")
-                    setting = 17;
-                    createMaze(setting)
-                    addBananas()
+                    fetchMaze(1)
                 })
                 document.getElementById("mode2").addEventListener('click', (e) => {
-                    setting = 25;
-                    createMaze(setting)
-                    addBananas()
+                    fetchMaze(2)
                 })
                 document.getElementById("mode3").addEventListener('click', (e) => {
-                    setting = 31;
-                    createMaze(setting)
-                    addBananas()
+                    fetchMaze(3)
                 })
-
-                document.getElementById("start-game").addEventListener("click", startGame)
         }
+        document.getElementById('leaderboard').addEventListener('click', showLeaderboard)
+    }
+
+    function fetchMaze(id) {
+        fetch(`http://localhost:3000/mazes/${id}`)
+            .then(resp => resp.json())
+            .then(maze => {
+                //Save maze ID, create maze and add bananas
+                mazeID = maze["id"]
+                createMaze(maze["dimensions"])
+                addBananas()
+                addScoreAndTimer()
+            })
+    }
+
+    function addScoreAndTimer() {
+        rightContainer.textContent = ''
+        rightContainer.innerHTML = `
+            <div id="score-container">
+                <button id="start-game">Start Game</button>
+                <div id ="maze-timer">
+                    <h2>Timer</h2>
+                    <p id ="timer-display">00:00</p> 
+                </div><br><br>
+                <div id ="score">
+                    <h2>Score</h2>
+                    <p id ="score-count"></p> 
+                </div>
+            </div>
+        `
+        document.getElementById("start-game").addEventListener("click", startGame)
+    }
+
+    function showLeaderboard() {
+
+        console.log("Yay leaderboard")
     }
 
     function checkForUser(user) {
@@ -97,10 +125,16 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(url, configObj)
             .then(resp => resp.json())
             .then(user => {
-                checkForUser(user)
-                createNavBar()
-            })
-            
+                // If the user successfully created a username or signed in, it will update the navbar and get rid of the form
+                if (checkForUser(user)) {
+                    rightContainer.textContent = ""
+                    createNavBar()
+                // If the user gets an error message, it will add the error message to the p element at the end of the form
+                } else {
+                    let errorMessage = document.querySelector('.error-message')
+                    errorMessage.textContent = `${user[0]}`
+                }
+            })    
     }
 
     function addNewUser() {
@@ -108,9 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML = `
         <form class="user-form">
-            <h1>Sign In</h1>
+            <h1>Create Username</h1>
             <input type="text" name="username" placeholder="Username" autocomplete="off">
             <input type="submit" name="submit" value="Create">
+            <p class="error-message"></p>
         </form>` 
       rightContainer.append(div)
 
@@ -128,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <h1>Log In</h1>
             <input type="text" name="username" placeholder="Username" autocomplete="off">
             <input type="submit" name="submit" value="Log In">
+            <p class="error-message"></p>
         </form>
         `
         rightContainer.append(div)
@@ -167,9 +203,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function keepScore() {
             score = 1000
+            document.getElementById('score-count').innerHTML = score;
             scoreCount = setInterval(function () {
-                document.getElementById('score-count').innerHTML = score;
                 score -= 2;
+                document.getElementById('score-count').innerHTML = score;
             }, 100);
         }
     }
@@ -283,7 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function addToScore() {
             score += 200;
-            // document.getElementById('score-count').innerHTML = score;
             display()
         }
 
@@ -296,10 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function saveGame() {
             //Create a post to Scores
-            let current_player = getElementById('user-icon')
-            let userID = current_player.dataset.id
-            // let mazeID = 
-
+            console.log(totalSeconds)
             let configObj = {
                 method: "POST",
                 headers: {
@@ -307,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    "user_id": userID,
+                    "user_id": current_user,
                     "maze_id": mazeID,
                     "time": totalSeconds,
                     "score": score

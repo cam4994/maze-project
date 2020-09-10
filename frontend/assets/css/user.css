@@ -11,13 +11,6 @@ body{
     padding-top: 20px;
   }
 
-.left {
-    left: 0;
-  }
-  
-  .right {
-    right: 0;
-  }
 
 #start-game {
     padding: 3px 3px;
@@ -31,10 +24,12 @@ body{
     cursor: pointer;
 }
 
-#maze-timer {
-    /* border-width: 5px;
-    border-style: solid;
-    overflow: auto; */
+#maze div {
+    display: block;
+    height: 20px;
+    width: auto;
+
+    margin: 0;
 }
 
 b {
@@ -51,7 +46,7 @@ b[gorilla]::before {
 
 b[banana]::before {
     content: "🍌";
-    font-size: 15x;
+    font-size: 15px;
 }
 
 b[w]::before {

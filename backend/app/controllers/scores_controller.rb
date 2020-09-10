@@ -4,6 +4,12 @@ class ScoresController < ApplicationController
     end
 
     def create 
-        puts params
+        score = Score.create(
+            maze_id: params[:maze_id], 
+            user_id: params[:user_id], 
+            time: params[:time], 
+            score: params[:score]
+        )
+        render json: score
     end
 end

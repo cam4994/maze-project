@@ -3,7 +3,7 @@ class CreateScores < ActiveRecord::Migration[6.0]
     create_table :scores do |t|
       t.integer :maze_id
       t.integer :user_id
-      t.time :time
+      t.integer :time
       t.integer :score
 
       t.timestamps
