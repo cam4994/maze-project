@@ -718,7 +718,10 @@ document.addEventListener("DOMContentLoaded", () => {
         popUp.remove()
         // Get rid of Maze
         document.getElementById("maze").innerHTML = ""
-        welcomeMessage()
+        const h1 = document.createElement('h1')
+        h1.setAttribute('id', 'welcome-message')
+        h1.innerHTML = `<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span><br><span>🐵</span></h1>`
+        leftContainer.appendChild(h1)
     }
 
     function loseMessage() {
