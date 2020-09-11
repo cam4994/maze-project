@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :scores, only: [:index, :create]
+  resources :scores, only: [:index, :create, :destroy]
   resources :mazes
   resources :users
   post '/login', to: 'sessions#create'

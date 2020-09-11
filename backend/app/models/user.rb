@@ -7,7 +7,7 @@ class User < ApplicationRecord
         scores = self.scores.sort_by { |score| score[:score]}.reverse()
         
         scores = scores.map do |score|
-            [score.score, score.maze.difficulty]
+            [score.score, score.maze.difficulty, score.id]
         end.take(10)
 
         {"#{self.username}": scores}

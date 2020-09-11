@@ -14,6 +14,12 @@ class ScoresController < ApplicationController
         render json: score
     end
 
+    def destroy
+        score = Score.find(params[:id])
+        puts score
+        score.delete
+    end
+
     def easy 
         scores = Score.easy_high_scores
         render json: scores

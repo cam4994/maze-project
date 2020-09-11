@@ -253,15 +253,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 gameScores.forEach(score => {
                     let gameScore = score[0]
                     let difficulty = score[1]
-                    let tableBodyy = document.querySelector('#highscoretable-body')
+                    let idOfScore = score[2]
+                    let tableBody = document.querySelector('#highscoretable-body')
                     let tr = document.createElement('tr')
+                    let deleteButton = document.createElement('button')
+                    deleteButton.classList.add('delete-score-button')
+                    deleteButton.textContent = "Delete"
+                    deleteButton.addEventListener('click', (e)=> {
+                        deleteScore(idOfScore)
+                    })
+
                     tr.innerHTML = `
                                 <td>${gameScore}</td>
-                                <td>${difficulty}</td>`
-                    tableBodyy.appendChild(tr)
+                                <td>${difficulty}</td>
+                                <td class="score-delete${idOfScore}"></td>
+                                `
+                    tableBody.appendChild(tr)
+                    document.querySelector(`.score-delete${idOfScore}`).append(deleteButton)
                 })
                 rightContainer.append(h1, table)
             })
+    }
+
+    function deleteScore(score_id) {
+        let configObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+        }
+        fetch(`http://localhost:3000/scores/${score_id}`, configObj)
+        showMyScores()
     }
 
     function showInstructions() {
@@ -688,13 +711,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loseMessage() {
         let div = document.createElement('div')
-        div.setAttribute('class', 'modal')
+        div.setAttribute('class', 'losemodal')
         div.innerHTML = `
         <div class="modal-container">
         <p class="modal-image">🙊</p>
             <p> Sorry! This maze was too tough!</p>
             <p> Your Score is ${score}</p>
-            <button class ="closemodalButton" onclick="document.querySelector('.modal').style.display='none'">Close</button><br><br>
+            <button class ="closemodalButton" onclick="document.querySelector('.losemodal').style.display='none'">Close</button><br><br>
         </div>`
         leftContainer.appendChild(div)
     }
