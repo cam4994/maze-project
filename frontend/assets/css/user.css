@@ -452,6 +452,24 @@ content: '';
   0 20px 20px rgba(0,0,0,.15);
 }
 
+/* highscore text */
+#myscore-text{
+  font-family: 'Grandstander';
+  font-size: 30px;
+  text-shadow: 0 1px 0 #ccc,
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
+}
+
 /* leaderboard buttons */
 #easy-button, #medium-button, #hard-button {
   font-family: 'Grandstander';
@@ -519,16 +537,127 @@ tbody	tr:hover {
   font-size:40px;
 }
 
-.close {
+.closemodalButton {
   color: #aaa;
-  float: right;
-  font-size: 20px;
+  float: center;
+  font-size: 15px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.closemodalButton:hover,
+.closemodalButton:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* highscore table */
+#highscore-table {
+	width: 300px;
+	border-collapse: collapse;
+  overflow: hidden;
+  text-align: center;
+  font-family: 'Grandstander';
+  border-radius: 20px;
+  
+  margin-top: 5%;
+  margin-left: 19%;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+  color: black;
+  text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+thead th {
+		background-color: burlywood;
+	}
+
+
+tbody	tr:hover {
+			background-color: rgba(255,255,255,0.3);
+    }
+
+.edit-form{
+    width: 200px;
+    position: absolute;
+    text-align: left;
+}
+
+.edit-form h1{
+    color: black;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.edit-form input[type="text"],.login-form input[type="password"]{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: left;
+    border: 2px solid green;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+.edit-form input[type="text"]:focus,.edit-form input[type="password"]:focus {
+    width: 280px;
+    border-color: gray;
+}
+
+.edit-form input[type="submit"]{
+    border:0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid green;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: black;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.edit-form input[type="submit"]:hover{
+    background: green;
+}
+
+.delete-form{
+  text-align: center;
+  font-family: Grandstander;
+  font-size: 15px;
+}
+
+.delete-form p{
+  font-size: 30px;
+}
+
+#delete-button {
+  font-family: 'Grandstander';
+  border-color: rgb(95, 95, 95);
+  padding: 8px 20px;
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 40px 40px rgb(95, 95, 95) inset, 0 0 0 0 rgb(95, 95, 95);
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+#delete-button:hover{
+  box-shadow: 0 0 10px 0 rgb(95, 95, 95) inset, 0 0 10px 4px rgb(95, 95, 95);
 }

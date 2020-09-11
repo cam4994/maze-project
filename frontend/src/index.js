@@ -200,8 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let div = document.createElement('div')
         div.innerHTML = `
         <form class="delete-form">
-            <h1>Are you sure you want to delete your profile?</h1>
-            <input type="submit" value="YES">
+            <h1>Are you sure<br>you want to delete<br> your profile?</h1><p>🙊💦</p><br>
+            <button id="delete-button" name="submit" type="submit">YES</button>
         </form>` 
         rightContainer.append(div)
 
@@ -232,25 +232,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showMyScores() {
+        rightContainer.textContent=''
+        highscoreTable()
         fetch(`http://localhost:3000/users/${current_user}`)
             .then(resp => resp.json())
             .then(scores => {
                 let username = Object.keys(scores)[0]
+                // let h1 = document.createElement('h1')
+                // h1.textContent = `User: ${username}`
                 let h1 = document.createElement('h1')
-                h1.textContent = `User: ${username}`
-                let h2 = document.createElement('h2')
-                h2.textContent = "High Scores"
+                h1.setAttribute('id', 'myscore-text')
+                h1.textContent = "🌞MY HIGHSCORES🌞"
                 gameScores = scores[username]
-                rightContainer.textContent= ''
-                let div = document.createElement('div')
+                let table = document.querySelector('#highscore-table')
                 gameScores.forEach(score => {
                     let gameScore = score[0]
                     let difficulty = score[1]
-                    let p = document.createElement('p')
-                    p.textContent= `Score: ${gameScore}  Difficulty: ${difficulty}`
-                    div.append(p)
+                    let tableBodyy = document.querySelector('#highscoretable-body')
+                    let tr = document.createElement('tr')
+                    tr.innerHTML=`
+                                <td>${gameScore}</td>
+                                <td>${difficulty}</td>`
+                    tableBodyy.appendChild(tr)
                 })
-                rightContainer.append(h1, h2, div)
+                rightContainer.append(h1, table)
             })
     }
 
@@ -294,6 +299,21 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch(url)
             .then(resp => resp.json())
             .then(scores => displayScores(scores))
+    }
+
+    function highscoreTable(){
+        let table = document.createElement('table')
+        table.setAttribute('id', 'highscore-table')
+        table.innerHTML=`
+            <thead>
+                <tr>
+                    <th>Score</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody id="highscoretable-body">
+            </tbody>`
+        rightContainer.appendChild(table)
     }
 
     function leaderboardTable(){
@@ -635,10 +655,10 @@ document.addEventListener("DOMContentLoaded", () => {
             div.setAttribute('class', 'modal')
             div.innerHTML=`
             <div class="modal-container">
-            <p class="modal-image">🙊</p>
+            <p class="modal-image">🙈</p>
                 <p> Congratulation! </p>
                 <p> Your Score is ${score}</p>
-                <a class="close">Close</a><br>
+                <button class ="closemodalButton" onclick="document.querySelector('.modal').style.display='none'">Close</button><br><br>
             </div>`
             leftContainer.appendChild(div)
         }
@@ -675,6 +695,7 @@ document.addEventListener("DOMContentLoaded", () => {
             congratMessage()
         }
     }
+
     function createMaze(setting) {
 
         function generate(dimensions) {
