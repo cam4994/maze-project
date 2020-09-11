@@ -417,6 +417,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 min = parseInt(min);
                 totalSeconds = (min * 60) + sec;
             }, 1000);
+            tickTock()
         }
 
         function keepScore() {
@@ -427,26 +428,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     score -= 1;
                 }
                 document.getElementById('score-count').innerHTML = score;
+                if (score == 0){
+                    loseGame()
+                }
             }, 100);
         }
 
         function bgMusic(){
              bg=document.querySelector('#music')
              bg.volume = 0.8;
-             bg.play()
-        }
-        function boundry(){
-            boop=document.querySelector('#wall')
-            boop.volume = 0.5;
-            boop.play()
-        }
-        function timeout(){
-            document.querySelector('#lose').play()
-        }
-        function lowTime(){
-            beep=document.querySelector('#wall')
-            beep.volume = 0.5;
-            beep.play()
+             bg.play()}
+
+        function tickTock(){
+            clk=document.querySelector('#time')
+            clk.volume = 0.5;
+            clk.play()
         }
     }
 
@@ -498,6 +494,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new Y position of gorilla, X is unchanged
                     locationY = locationY - 1
                     addToScore()
+                } else if (maze[locationY - 1][locationX] == "w") {
+                     document.querySelector('#wall').play()
                 }
             } else if (event.key == "ArrowDown") {
                 event.preventDefault()
@@ -517,7 +515,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new Y position of gorilla, X is unchanged
                     locationY = locationY + 1
                     addToScore()
-                } 
+                } else if (maze[locationY + 1][locationX] == "w") {
+                    document.querySelector('#wall').play()
+                }
             } else if (event.key == "ArrowLeft") {
                 if (maze[locationY][locationX - 1] == "") {
                     // Move gorilla left
@@ -535,6 +535,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new X position of gorilla, Y is unchanged
                     locationX = locationX - 1
                     addToScore()
+                } else if (maze[locationY][locationX - 1] == "w") {
+                    document.querySelector('#wall').play()
                 }
             } else if (event.key == "ArrowRight") {
                 if (maze[locationY][locationX + 1] == "") {
@@ -553,6 +555,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Set new X position of gorilla, Y is unchanged
                     locationX = locationX + 1
                     addToScore()
+                } else if (maze[locationY][locationX + 1] == "w") {
+                    document.querySelector('#wall').play()
                 }
             }
         }
@@ -591,7 +595,17 @@ document.addEventListener("DOMContentLoaded", () => {
             clearInterval(timer)
             clearInterval(scoreCount)
             document.querySelector('#music').pause()
+            document.querySelector('#time').pause()
             document.querySelector('#win').play()
+            saveGame()
+        }
+        function loseGame() {
+            //Stop timer and score from counting
+            clearInterval(timer)
+            clearInterval(scoreCount)
+            document.querySelector('#music').pause()
+            document.querySelector('#time').pause()
+            document.querySelector('#lose').play()
             saveGame()
         }
 
