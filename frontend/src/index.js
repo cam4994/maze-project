@@ -379,6 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayScores(scores) {
         leaderboardTable()
+        console.log(scores)
         let table = document.querySelector('#leaderboard-table')
         var i = 0
         scores.forEach(score => {
@@ -707,6 +708,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class ="closemodalButton" onclick="document.querySelector('.modal').style.display='none'">Close</button><br><br>
             </div>`
         leftContainer.appendChild(div)
+        document.querySelector('.closemodalButton').addEventListener('click', (e)=> {
+            removeModal()
+        })
+    }
+
+    function removeModal() {
+        let popUp = document.querySelector('.modal')
+        popUp.remove()
+        // Get rid of Maze
+        document.getElementById("maze").innerHTML = ""
+        welcomeMessage()
     }
 
     function loseMessage() {
@@ -720,6 +732,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <button class ="closemodalButton" onclick="document.querySelector('.losemodal').style.display='none'">Close</button><br><br>
         </div>`
         leftContainer.appendChild(div)
+        document.querySelector('.closemodalButton').addEventListener('click', (e)=> {
+            removeModal()
+        })
     }
 
     function saveGame() {
