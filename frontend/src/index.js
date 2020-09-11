@@ -136,23 +136,27 @@ document.addEventListener("DOMContentLoaded", () => {
         rightContainer.textContent= ''
         // Create easy, medium and hard buttons
         let easyButton = document.createElement('button')
+        easyButton.setAttribute('id', 'easy-button')
         easyButton.textContent = "Easy"
         easyButton.addEventListener("click", (e)=> {
             filterHighScores("easy")
         })
         let mediumButton = document.createElement('button')
+        mediumButton.setAttribute('id', 'medium-button')
         mediumButton.textContent = "Medium"
         mediumButton.addEventListener("click", (e)=> {
             filterHighScores("medium")
         })
         let hardButton = document.createElement('button')
+        hardButton.setAttribute('id', 'hard-button')
         hardButton.textContent = "Hard"
         hardButton.addEventListener("click", (e)=> {
             filterHighScores("hard")
         })
 
         let h1= document.createElement('h1')
-        h1.textContent = "LEADERBOARD"
+        h1.setAttribute('id', 'leaderboard-text')
+        h1.textContent = "🍌LEADERBOARD🍌"
         rightContainer.append(h1, easyButton, mediumButton, hardButton)
 
         // Display High Scores
@@ -160,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function filterHighScores(difficulty) {
-        document.querySelector('.high-scores').remove()
+        document.querySelector('#leaderboard-table').remove()
         fetchHighScores(`http://localhost:3000/scores/${difficulty}`)
     }
 
@@ -170,18 +174,43 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(scores => displayScores(scores))
     }
 
+    function leaderboardTable(){
+        let table = document.createElement('table')
+        table.setAttribute('id', 'leaderboard-table')
+        table.innerHTML=`
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Uername</th>
+                    <th>Score</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>`
+        rightContainer.appendChild(table)
+    }
+
     function displayScores(scores) {
-        let div = document.createElement('div')
-        div.classList.add('high-scores')
+        leaderboardTable()
+        let table = document.querySelector('#leaderboard-table')
+        var i = 0
         scores.forEach(score => {
             let username = Object.keys(score)[0]
             let userScore = score[username][0]
             let difficulty = score[username][1]
-            let p = document.createElement('p')
-            p.textContent = `${username} Score: ${userScore}, Difficulty: ${difficulty}`
-            div.append(p)
+            i += 1
+            let tableBody = document.querySelector('#table-body')
+            let tr = document.createElement('tr')
+            tr.innerHTML=`
+                        <td>${i}</td>
+                        <td>${username}</td>
+                        <td>${userScore}</td>
+                        <td>${difficulty}</td>`
+            
+            tableBody.appendChild(tr)
         });
-        rightContainer.append(div)
+        rightContainer.append(table)
     }
 
     function checkForUser(user) {
@@ -444,6 +473,20 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector('#music').pause()
             document.querySelector('#win').play()
             saveGame()
+            
+        }
+
+        function congratMessage(){
+            let div = document.createElement('div')
+            div.setAttribute('class', 'modal')
+            div.innerHTML=`
+            <div class="modal-container">
+            <p class="modal-image">🙊</p>
+                <p> Congratulation! </p>
+                <p> Your Score is ${score}</p>
+                <a class="close">Close</a><br>
+            </div>`
+            leftContainer.appendChild(div)
         }
 
         function saveGame() {
@@ -465,6 +508,8 @@ document.addEventListener("DOMContentLoaded", () => {
             fetch("http://localhost:3000/scores", configObj)
                 .then(resp => resp.json())
                 .then(score => console.log(score))
+            
+            congratMessage()
         }
     }
     function createMaze(setting) {
@@ -617,4 +662,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
         display()
     }
+    
 })
