@@ -16,7 +16,7 @@ class Score < ApplicationRecord
 
         scores.map do |score| 
             {"#{score.user.username}": [score.score, score.maze.difficulty]}
-        end.take(5)
+        end.take(10)
     end
 
     def self.medium_high_scores
@@ -26,7 +26,7 @@ class Score < ApplicationRecord
 
         scores.map do |score| 
             {"#{score.user.username}": [score.score, score.maze.difficulty]}
-        end.take(5)
+        end.take(10)
     end
 
     def self.hard_high_scores
@@ -36,6 +36,6 @@ class Score < ApplicationRecord
 
         scores.map do |score| 
             {"#{score.user.username}": [score.score, score.maze.difficulty]}
-        end.take(5)
+        end.take(10)
     end
 end

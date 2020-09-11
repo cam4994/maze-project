@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let current_user = 0;
     let mazeID;
     welcomeMessage()
-    createNavBar() 
-    
+    createNavBar()
+
     function createNavBar() {
         navBar.textContent = ''
         if (checkForUser(current_user) == false) {
@@ -43,9 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </li>
             <li id="my-scores"><a href="#scores/">My High Scores</a></li>
+            <li id="instructions"><a href="#instructions/">Instructions</a></li>
             <li id="user-icon" style="float:right" class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn"><img src="./assets/images/avatar.png" alt="Avatar" class="avatar"></a>
-                <div class="dropdown-content">
+                <div class="dropdown-profile">
                     <a id="edit-user" href="#maze/">Edit Profile</a>
                     <a id="delete-user" href="#maze/">Delete Profile</a>
                 </div>
@@ -54,51 +55,55 @@ document.addEventListener("DOMContentLoaded", () => {
             let li = document.getElementById('user-icon')
             li.setAttribute("data-id", current_user)
 
-                document.getElementById('mode1').addEventListener('click', (e) => {
-                    fetchMaze(1)
-                })
-                document.getElementById("mode2").addEventListener('click', (e) => {
-                    fetchMaze(2)
-                })
-                document.getElementById("mode3").addEventListener('click', (e) => {
-                    fetchMaze(3)
-                })
-                document.getElementById("edit-user").addEventListener('click', (e) => {
-                    editUserForm()
-                })
-                document.getElementById("delete-user").addEventListener('click', (e) => {
-                    deleteUserForm()
-                })
-                document.getElementById("my-scores").addEventListener('click', (e) => {
-                    showMyScores()
-                })
-                
+            document.getElementById('mode1').addEventListener('click', (e) => {
+                fetchMaze(1)
+            })
+            document.getElementById("mode2").addEventListener('click', (e) => {
+                fetchMaze(2)
+            })
+            document.getElementById("mode3").addEventListener('click', (e) => {
+                fetchMaze(3)
+            })
+            document.getElementById("edit-user").addEventListener('click', (e) => {
+                editUserForm()
+            })
+            document.getElementById("delete-user").addEventListener('click', (e) => {
+                deleteUserForm()
+            })
+            document.getElementById("my-scores").addEventListener('click', (e) => {
+                showMyScores()
+            })
+            document.getElementById("instructions").addEventListener('click', (e) => {
+                showInstructions()
+            })
+
         }
         document.getElementById('leaderboard').addEventListener('click', showLeaderboard)
     }
 
-    function clearWelcome(){
+    function clearWelcome() {
         const a = document.querySelector('#welcome-message')
-        if (a){
-        a.remove()}
-        rightContainer.innerHTML=''
+        if (a) {
+            a.remove()
+        }
+        rightContainer.innerHTML = ''
     }
 
-    function welcomeMessage(){
+    function welcomeMessage() {
         const h1 = document.createElement('h1')
         h1.setAttribute('id', 'welcome-message')
-        h1.innerHTML=`<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span><br><span>🐵</span></h1>`
+        h1.innerHTML = `<span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span>!</span><br><span>🐵</span></h1>`
         leftContainer.appendChild(h1)
-    
+
         const h3 = document.createElement('h3')
         h3.setAttribute('id', 'instruction')
-        h3.innerHTML=`
+        h3.innerHTML = `
         <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
         rightContainer.appendChild(h3)
     }
 
-    function selectMazeText(){
-        rightContainer.innerHTML=`
+    function selectMazeText() {
+        rightContainer.innerHTML = `
         <h1 id="select-maze">
         <span>↖</span>
         <span>S</span>
@@ -123,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 //Save maze ID, create maze and add bananas
                 mazeID = maze["id"]
                 createMaze(maze["dimensions"])
-                addBananas()
+                addBananas(id)
                 addScoreAndTimer()
             })
     }
@@ -158,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" name="username" placeholder="Username" autocomplete="off">
             <input type="submit" value="Edit">
             <p class="error-message"></p>
-        </form>` 
+        </form>`
         rightContainer.append(div)
 
         let editForm = document.querySelector('.edit-form')
@@ -181,18 +186,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         fetch(`http://localhost:3000/users/${current_user}`, configObj)
             .then(resp => resp.json())
-            .then(user => { 
+            .then(user => {
                 // If the user successfully created a username or signed in, it will update the navbar and get rid of the form
                 if (checkForUser(user)) {
                     rightContainer.textContent = ""
                     selectMazeText()
                     createNavBar()
-                // If the user gets an error message, it will add the error message to the p element at the end of the form
+                    // If the user gets an error message, it will add the error message to the p element at the end of the form
                 } else {
                     let errorMessage = document.querySelector('.error-message')
                     errorMessage.textContent = `${user[0]}`
                 }
-            })    
+            })
     }
 
     function deleteUserForm() {
@@ -202,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <form class="delete-form">
             <h1>Are you sure you want to delete your profile?</h1>
             <input type="submit" value="YES">
-        </form>` 
+        </form>`
         rightContainer.append(div)
 
         let deleteForm = document.querySelector('.delete-form')
@@ -225,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         current_user = 0
         const h3 = document.createElement('h3')
         h3.setAttribute('id', 'instruction')
-        h3.innerHTML=`
+        h3.innerHTML = `
         <h3 id="instruction">Please Login <br>or<br> Create New Username</h3>`
         rightContainer.appendChild(h3)
         createNavBar()
@@ -241,42 +246,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 let h2 = document.createElement('h2')
                 h2.textContent = "High Scores"
                 gameScores = scores[username]
-                rightContainer.textContent= ''
+                rightContainer.textContent = ''
                 let div = document.createElement('div')
                 gameScores.forEach(score => {
                     let gameScore = score[0]
                     let difficulty = score[1]
                     let p = document.createElement('p')
-                    p.textContent= `Score: ${gameScore}  Difficulty: ${difficulty}`
+                    p.textContent = `Score: ${gameScore}  Difficulty: ${difficulty}`
                     div.append(p)
                 })
                 rightContainer.append(h1, h2, div)
             })
     }
 
+    function showInstructions() {
+        rightContainer.textContent = ''
+        let div = document.createElement('div')
+        div.setAttribute('class', 'show-instructions')
+        div.innerHTML = `
+            <h1 id="instructions-title">🍌INSTRUCTIONS🍌</h1>
+            <p>Maze Monkey is a game where the objective is to escape the maze with the highest score possible! You will be controlling a monkey using the four arrow keys (up, down, left and right).</p>
+            <p>To play, you must either log in with a previous username or create a new username. Once logged in, you will have the option to select "New Maze" in the navigation bar. A drop down menu will appear giving you the option to select between three difficulties.</p>
+            <p>Once a difficulty is selected, the maze will appear along with a timer, a score and a "Start Game" button. The game will not start until you click the "Start Game" button.</p>
+            <p>When the game is started, the timer will begin and your score will begin decreasing by 10 points every second. You will begin with 1000 points</p>
+            <p>Throughout the maze, there will be randomly placed bananas that will add 300 points to your score. Watch your score, because if it reaches 0, it's game over. </p>
+            <p>At any time, you can click "Leaderboard" and see the top scores in the game. If you just want to see your individual high scores, you can click "My High Scores"</p>
+            `
+        rightContainer.append(div)
+    }
+
     function showLeaderboard() {
-        rightContainer.textContent= ''
+        rightContainer.textContent = ''
         // Create easy, medium and hard buttons
         let easyButton = document.createElement('button')
         easyButton.setAttribute('id', 'easy-button')
         easyButton.textContent = "Easy"
-        easyButton.addEventListener("click", (e)=> {
+        easyButton.addEventListener("click", (e) => {
             filterHighScores("easy")
         })
         let mediumButton = document.createElement('button')
         mediumButton.setAttribute('id', 'medium-button')
         mediumButton.textContent = "Medium"
-        mediumButton.addEventListener("click", (e)=> {
+        mediumButton.addEventListener("click", (e) => {
             filterHighScores("medium")
         })
         let hardButton = document.createElement('button')
         hardButton.setAttribute('id', 'hard-button')
         hardButton.textContent = "Hard"
-        hardButton.addEventListener("click", (e)=> {
+        hardButton.addEventListener("click", (e) => {
             filterHighScores("hard")
         })
 
-        let h1= document.createElement('h1')
+        let h1 = document.createElement('h1')
         h1.setAttribute('id', 'leaderboard-text')
         h1.textContent = "🍌LEADERBOARD🍌"
         rightContainer.append(h1, easyButton, mediumButton, hardButton)
@@ -296,10 +317,10 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(scores => displayScores(scores))
     }
 
-    function leaderboardTable(){
+    function leaderboardTable() {
         let table = document.createElement('table')
         table.setAttribute('id', 'leaderboard-table')
-        table.innerHTML=`
+        table.innerHTML = `
             <thead>
                 <tr>
                     <th>Rank</th>
@@ -324,12 +345,12 @@ document.addEventListener("DOMContentLoaded", () => {
             i += 1
             let tableBody = document.querySelector('#table-body')
             let tr = document.createElement('tr')
-            tr.innerHTML=`
+            tr.innerHTML = `
                         <td>${i}</td>
                         <td>${username}</td>
                         <td>${userScore}</td>
                         <td>${difficulty}</td>`
-            
+
             tableBody.appendChild(tr)
         });
         rightContainer.append(table)
@@ -372,12 +393,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     rightContainer.textContent = ""
                     selectMazeText()
                     createNavBar()
-                // If the user gets an error message, it will add the error message to the p element at the end of the form
+                    // If the user gets an error message, it will add the error message to the p element at the end of the form
                 } else {
                     let errorMessage = document.querySelector('.error-message')
                     errorMessage.textContent = `${user[0]}`
                 }
-            })    
+            })
     }
 
     function addNewUser() {
@@ -389,8 +410,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <input type="text" name="username" placeholder="Username" autocomplete="off">
             <input type="submit" name="submit" value="Create">
             <p class="error-message"></p>
-        </form>` 
-      rightContainer.append(div)
+        </form>`
+        rightContainer.append(div)
 
         let createForm = document.querySelector('.user-form')
         createForm.addEventListener('submit', (e) => {
@@ -453,23 +474,24 @@ document.addEventListener("DOMContentLoaded", () => {
             score = 1000
             document.getElementById('score-count').innerHTML = score;
             scoreCount = setInterval(function () {
-                if (score > 0){
+                if (score > 0) {
                     score -= 1;
                 }
                 document.getElementById('score-count').innerHTML = score;
-                if (score == 0){
+                if (score == 0) {
                     loseGame()
                 }
             }, 100);
         }
 
-        function bgMusic(){
-             bg=document.querySelector('#music')
-             bg.volume = 0.8;
-             bg.play()}
+        function bgMusic() {
+            bg = document.querySelector('#music')
+            bg.volume = 0.8;
+            bg.play()
+        }
 
-        function tickTock(){
-            clk=document.querySelector('#time')
+        function tickTock() {
+            clk = document.querySelector('#time')
             clk.volume = 0.5;
             clk.play()
         }
@@ -524,7 +546,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     locationY = locationY - 1
                     addToScore()
                 } else if (maze[locationY - 1][locationX] == "w") {
-                     document.querySelector('#wall').play()
+                    document.querySelector('#wall').play()
                 }
             } else if (event.key == "ArrowDown") {
                 event.preventDefault()
@@ -592,7 +614,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function addToScore() {
             score += 300;
-            item=document.querySelector('#get')
+            item = document.querySelector('#get')
             item.volume = 0.2;
             item.play()
             display()
@@ -607,9 +629,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function fade(element) {
             // initial opacity
-            let opac = 1  
+            let opac = 1
             let fadeTimer = setInterval(function () {
-                if (opac <= 0.1){
+                if (opac <= 0.1) {
                     clearInterval(fadeTimer);
                     element.style.display = 'none';
                 }
@@ -626,55 +648,69 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector('#music').pause()
             document.querySelector('#time').pause()
             document.querySelector('#win').play()
+            congratsMessage()
             saveGame()
-            
-        }
-
-        function congratMessage(){
-            let div = document.createElement('div')
-            div.setAttribute('class', 'modal')
-            div.innerHTML=`
-            <div class="modal-container">
-            <p class="modal-image">🙊</p>
-                <p> Congratulation! </p>
-                <p> Your Score is ${score}</p>
-                <a class="close">Close</a><br>
-            </div>`
-            leftContainer.appendChild(div)
-        }
-        function loseGame() {
-            //Stop timer and score from counting
-            clearInterval(timer)
-            clearInterval(scoreCount)
-            document.querySelector('#music').pause()
-            document.querySelector('#time').pause()
-            document.querySelector('#lose').play()
-            saveGame()
-        }
-
-        function saveGame() {
-            //Create a post to Scores
-            let configObj = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    "user_id": current_user,
-                    "maze_id": mazeID,
-                    "time": totalSeconds,
-                    "score": score
-                })
-            }
-
-            fetch("http://localhost:3000/scores", configObj)
-                .then(resp => resp.json())
-                .then(score => console.log(score))
-            
-            congratMessage()
         }
     }
+
+    function congratsMessage() {
+        let div = document.createElement('div')
+        div.setAttribute('class', 'modal')
+        div.innerHTML = `
+        <div class="modal-container">
+        <p class="modal-image">🙊</p>
+            <p> Congratulations! </p>
+            <p> Your Score is ${score}</p>
+            <a class="close">Close</a><br>
+        </div>`
+        leftContainer.appendChild(div)
+    }
+
+    function loseMessage() {
+        let div = document.createElement('div')
+        div.setAttribute('class', 'modal')
+        div.innerHTML = `
+        <div class="modal-container">
+        <p class="modal-image">🙊</p>
+            <p> Sorry! This maze was too tough!</p>
+            <p> Your Score is ${score}</p>
+            <a class="close">Close</a><br>
+        </div>`
+        leftContainer.appendChild(div)
+    }
+
+    function saveGame() {
+        //Create a post to Scores
+        let configObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                "user_id": current_user,
+                "maze_id": mazeID,
+                "time": totalSeconds,
+                "score": score
+            })
+        }
+
+        fetch("http://localhost:3000/scores", configObj)
+            .then(resp => resp.json())
+            .then(score => console.log(score))
+    }
+
+    function loseGame() {
+        //Stop timer and score from counting
+        clearInterval(timer)
+        clearInterval(scoreCount)
+        document.querySelector('#music').pause()
+        document.querySelector('#time').pause()
+        document.querySelector('#lose').play()
+        loseMessage()
+        saveGame()
+    }
+
     function createMaze(setting) {
 
         function generate(dimensions) {
@@ -807,8 +843,16 @@ document.addEventListener("DOMContentLoaded", () => {
         display();
     }
 
-    function addBananas() {
-        let number = 8
+    function addBananas(maze_id) {
+        let number;
+        if (maze_id == 1) {
+            number = 8
+        } else if (maze_id == 2) {
+            number = 11
+        } else {
+            number = 14
+        }
+
         for (let i = 0; i < number; i++) {
             let y = 0
             let x = 0
@@ -825,5 +869,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
         display()
     }
-    
+
 })
