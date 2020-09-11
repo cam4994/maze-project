@@ -104,7 +104,6 @@ height: 70px;}
     border-radius: 20px;
 }
 
-
 .left_container{ grid-area: 2 / 1 / 10 / 3; 
     border-right-style: dotted;
     display: flex;
@@ -425,6 +424,7 @@ content: '';
   }
 }
 
+/* error message */
 .error-message{
   color: red;
 }
@@ -433,4 +433,102 @@ content: '';
   color: green;
   font-size: 24px;
   font-weight: bold;
+}
+/* leaderboard text */
+#leaderboard-text{
+  font-family: 'Grandstander';
+  font-size: 30px;
+  text-shadow: 0 1px 0 #ccc,
+  0 2px 0 #c9c9c9,
+  0 3px 0 #bbb,
+  0 4px 0 #b9b9b9,
+  0 5px 0 #aaa,
+  0 6px 1px rgba(0,0,0,.1),
+  0 0 5px rgba(0,0,0,.1),
+  0 1px 3px rgba(0,0,0,.3),
+  0 3px 5px rgba(0,0,0,.2),
+  0 5px 10px rgba(0,0,0,.25),
+  0 10px 10px rgba(0,0,0,.2),
+  0 20px 20px rgba(0,0,0,.15);
+}
+
+/* leaderboard buttons */
+#easy-button, #medium-button, #hard-button {
+  font-family: 'Grandstander';
+  border-color: #e2a85d;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 40px 40px #e2a85d inset, 0 0 0 0 #e2a85d;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+#easy-button:hover, #medium-button:hover, #hard-button:hover {
+  box-shadow: 0 0 10px 0 #e2a85d inset, 0 0 10px 4px #e2a85d;
+}
+
+/* leaderboard table */
+#leaderboard-table {
+	width: 200px;
+	border-collapse: collapse;
+  overflow: hidden;
+  text-align: center;
+  font-family: 'Grandstander';
+  border-radius: 20px;
+  
+  margin-top: 5%;
+  margin-left: 14%;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: black;
+}
+
+th {
+	text-align: left;
+}
+
+thead th {
+		background-color: burlywood;
+	}
+
+
+tbody	tr:hover {
+			background-color: rgba(255,255,255,0.3);
+    }
+    
+/* modal */
+.modal-container{
+  position:fixed;
+  border: 1px solid #000;
+  bottom: 40%;
+  border-radius: 5px;
+  width: 400px;
+  right: 53%;
+  background-color: lightyellow;
+  text-align: center;
+  font-family: Grandstander;
+}
+
+.modal-image{
+  font-size:40px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
