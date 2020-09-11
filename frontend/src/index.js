@@ -530,7 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function bgMusic() {
             bg = document.querySelector('#music')
-            bg.volume = 0.8;
+            bg.volume = 0.5;
             bg.play()
         }
 
